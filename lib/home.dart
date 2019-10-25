@@ -19,10 +19,11 @@ class _HomeState extends State<Home> {
     setState(() {
       _priceController.clear();
       _weightController.clear();
+      priceForKilo = "";
     });
   }
 
-  double calcPrice() {
+  void calcPrice() {
     setState(() {
       double price = double.parse(_priceController.text);
       double weight = double.parse(_weightController.text);
@@ -38,123 +39,123 @@ class _HomeState extends State<Home> {
     setState(() {
       radioValue = value;
 //      calcPrice();
-      if (radioValue == 0) {
-        return currency = "EUR";
-      } else {
-        calcPrice();
-        return currency = "RUB";
-      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    String currency = radioValue == 0 ? "EUR" : "RUB";
     return Scaffold(
-        appBar: AppBar(
-          title: Text('PriceCalc'),
-          centerTitle: true,
-          backgroundColor: primaryBlue,
-        ),
-        body: ListView(
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 20, bottom: 30),
+      appBar: AppBar(
+        title: Text('PriceCalc'),
+        centerTitle: true,
+        backgroundColor: primaryBlue,
+      ),
+      body: ListView(
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(top: 20, bottom: 30),
+              ),
+              Image.asset(
+                'assets/images/pricecalc.png',
+                height: 130,
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 30),
+                width: 350,
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Choose your currency"),
+                    Radio<int>(
+                      value: 0,
+                      groupValue: radioValue,
+                      onChanged: handleRadioValueChanged,
+                    ),
+                    Text('EUR'),
+                    Radio<int>(
+                      value: 1,
+                      groupValue: radioValue,
+                      onChanged: handleRadioValueChanged,
+                    ),
+                    Text('RUB')
+                  ],
                 ),
-                Image.asset(
-                  'assets/images/pricecalc.png',
-                  height: 130,
-                ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 30),
-                  width: 350,
-                  alignment: Alignment.center,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text("Choose your currency"),
-                      Radio<int>(
-//                    activeColor: Colors.white,
-                        value: 0,
-                        groupValue: radioValue,
-                        onChanged: handleRadioValueChanged,
-                      ),
-                      Text('EUR'),
-                      Radio<int>(
-//                    activeColor: Colors.white,
-                        value: 1,
-                        groupValue: radioValue,
-                        onChanged: handleRadioValueChanged,
-                      ),
-                      Text('RUB')
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 30),
-                  width: 350,
-                  alignment: Alignment.center,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: TextField(
-                          controller: _priceController,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            hintText: "Price",
-                            icon: Icon(Icons.monetization_on),
-                          ),
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 30),
+                width: 350,
+                alignment: Alignment.center,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: TextField(
+                        controller: _priceController,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          suffixText: currency,
+//                          suffixIcon: Icon(Icons.euro_symbol),
+                          hintText: "Price",
+                          icon: Icon(Icons.monetization_on),
                         ),
                       ),
-                      Expanded(
-                        child: TextField(
-                          controller: _weightController,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            hintText: "Weight in grams",
-                            icon: Icon(Icons.local_grocery_store),
-                          ),
+                    ),
+                    Container(
+                      width: 30,
+                    ),
+                    Expanded(
+                      child: TextField(
+                        controller: _weightController,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          hintText: "Weight",
+                          suffixText: "g",
+                          icon: Icon(Icons.local_grocery_store),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Container(
-                  child: MaterialButton(
-                    minWidth: 130,
-                    onPressed: calcPrice,
-                    color: primaryYellow,
-                    child: Text("Calculate", style: TextStyle(fontSize: 16.9)),
-                    splashColor: Theme.of(context).splashColor,
-                  ),
+              ),
+              Container(
+                child: MaterialButton(
+                  minWidth: 130,
+                  onPressed: calcPrice,
+                  color: primaryYellow,
+                  child: Text("Calculate", style: TextStyle(fontSize: 16.9)),
+                  splashColor: Theme.of(context).splashColor,
                 ),
-                Container(
-                  child: MaterialButton(
-                    minWidth: 130,
-                    onPressed: _clearTextFields,
-                    color: lightGrey,
-                    child: new Text("Clear",
-                        style: TextStyle(color: Colors.black, fontSize: 16.9)),
-                  ),
+              ),
+              Container(
+                child: MaterialButton(
+                  minWidth: 130,
+                  onPressed: _clearTextFields,
+                  color: lightGrey,
+                  child: new Text("Clear",
+                      style: TextStyle(color: Colors.black, fontSize: 16.9)),
                 ),
-                Padding(padding: EdgeInsets.all(20)),
-                _weightController.text.isEmpty && _priceController.text.isEmpty
-                    ? Text(
-                        "Please enter the price and weight",
-                        textAlign: TextAlign.center,
-                      )
-                    : Text(
-                        "$priceForKilo $currency/kg",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.w500,
-                            color: primaryBlue),
-                      ),
-              ],
-            )
-          ],
-        ));
+              ),
+              Padding(padding: EdgeInsets.all(20)),
+              _weightController.text.isEmpty && _priceController.text.isEmpty
+                  ? Text(
+                      "Please enter the price and weight",
+                      textAlign: TextAlign.center,
+                    )
+                  : Text(
+                      "$priceForKilo $currency/kg",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w500,
+                          color: primaryBlue),
+                    ),
+            ],
+          )
+        ],
+      ),
+    );
   }
 }
