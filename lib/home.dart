@@ -16,6 +16,7 @@ class _HomeState extends State<Home> {
   Color lightGrey = Color.fromRGBO(238, 238, 238, 1);
 
   void _clearTextFields() {
+    FocusScope.of(context).unfocus();
     setState(() {
       _priceController.clear();
       _weightController.clear();
@@ -24,6 +25,7 @@ class _HomeState extends State<Home> {
   }
 
   void calcPrice() {
+    FocusScope.of(context).unfocus();
     setState(() {
       double price = double.parse(_priceController.text);
       double weight = double.parse(_weightController.text);
