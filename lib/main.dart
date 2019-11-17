@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'home.dart';
+import 'package:PriceCalc/Components/Home.dart';
 
 void main() => runApp(MyApp());
 

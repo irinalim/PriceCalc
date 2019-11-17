@@ -143,7 +143,7 @@ class _HomeState extends State<Home> {
               Padding(padding: EdgeInsets.all(20)),
               _weightController.text.isEmpty && _priceController.text.isEmpty
                   ? Text(
-                      "Please enter the price and weight",
+                      "Please enter price and weight",
                       textAlign: TextAlign.center,
                     )
                   : Text(
