@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:PriceCalc/Components/Home.dart';
 
 void main() => runApp(MyApp());

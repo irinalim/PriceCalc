@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter/services.dart' show PlatformException;
 
 class Login extends StatefulWidget {
   @override
@@ -6,6 +9,10 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  String _imageUrl;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +31,7 @@ class _LoginState extends State<Login> {
                       padding: const EdgeInsets.all(8.0),
                       child: FlatButton(
                         child: Text("Google Sign-in"),
-                        onPressed: () => googleSignIn(),
+                        onPressed: () => signInWithGoogle(),
                         color: Colors.blue,
                       ),
                     ),
@@ -32,7 +39,7 @@ class _LoginState extends State<Login> {
                       padding: const EdgeInsets.all(8.0),
                       child: FlatButton(
                         child: Text("Google Sign-Out"),
-                        onPressed: () => _logout(),
+                        onPressed: () => signOutGoogle(),
                         color: Colors.grey.shade500,
                       ),
                     ),
@@ -46,14 +53,40 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Future<FirebaseUser> googleSignIn() async {
-    GoogleSignInAccount googleSignInAccount = await _googleSignin.signIn();
-    GoogleSignInAuthentication googleSignInAuthentication  = await googleSignInAccount.authentication;
-    AuthCredential credential = GoogleAuthProvider.getCredential(accessToken: googleSignInAuthentication.accessToken, idToken: googleSignInAuthentication.idToken);
-    FirebaseUser user = await _auth.signInWithCredential(credential);
-    print("User is ${user.displayName}");
-    setState(() {
-      _imageUrl = user.photoUrl;
-    });
+  Future<String> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount googleSignInAccount = await _googleSignIn
+          .signIn();
+      final GoogleSignInAuthentication googleSignInAuthentication =
+      await googleSignInAccount.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+
+      final AuthResult authResult = await _auth.signInWithCredential(
+          credential);
+      final FirebaseUser user = authResult.user;
+
+      assert(!user.isAnonymous);
+      assert(await user.getIdToken() != null);
+
+      final FirebaseUser currentUser = await _auth.currentUser();
+      print(currentUser.uid + currentUser.displayName);
+      assert(user.uid == currentUser.uid);
+      return 'signInWithGoogle succeeded: $user';
+    } on PlatformException catch ( e) {
+      print(e);
+    }
+
+  }
+
+  void signOutGoogle() async{
+    await _googleSignIn.signOut();
+
+    print("User Sign Out");
   }
 }
+
+

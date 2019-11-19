@@ -1,3 +1,4 @@
+import 'package:PriceCalc/Components/Login.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -154,6 +155,15 @@ class _HomeState extends State<Home> {
                           fontWeight: FontWeight.w500,
                           color: primaryBlue),
                     ),
+              FlatButton(
+                  onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Login()),
+                );
+              },
+              child: Text('Sign in with Google'),),
+              Text("Login")
             ],
           )
         ],
