@@ -155,15 +155,15 @@ class _HomeState extends State<Home> {
                           fontWeight: FontWeight.w500,
                           color: primaryBlue),
                     ),
-              FlatButton(
-                  onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Login()),
-                );
-              },
-              child: Text('Sign in with Google'),),
-              Text("Login")
+              RaisedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Login()),
+                  );
+                },
+                child: Text('Sign in with Google'),
+              ),
             ],
           )
         ],

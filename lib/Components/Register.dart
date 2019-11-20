@@ -3,14 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/services.dart' show PlatformException;
 import 'package:PriceCalc/Models/user.dart';
-import 'package:PriceCalc/Components/Register.dart';
 
-class Login extends StatefulWidget {
+class Register extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _LoginState extends State<Login> {
+class _RegisterState extends State<Register> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final _loginFormKey = GlobalKey<FormState>();
@@ -37,6 +36,7 @@ class _LoginState extends State<Login> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         TextFormField(
+//                          controller: _emailController,
                           decoration: const InputDecoration(
                             icon: Icon(Icons.email),
                             hintText: 'Введите свой email',
@@ -51,6 +51,7 @@ class _LoginState extends State<Login> {
                           },
                         ),
                         TextFormField(
+//                          controller: _passwordController,
                           obscureText: true,
                           decoration: const InputDecoration(
                             icon: Icon(Icons.lock),
@@ -70,19 +71,8 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 RaisedButton(
-                  onPressed: () {
-                    handleSignInUser();
-                  },
-                  child: Text("Login user"),
-                ),
-                RaisedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Register()),
-                    );
-                  },
-                  child: Text("Register"),
+                  onPressed: () => handleCreateUser(),
+                  child: Text("Create user"),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -120,7 +110,7 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Future handleSignInUser() async {
+  Future handleCreateUser() async {
     if (_loginFormKey.currentState.validate()) {
       _loginFormKey.currentState.save();
       _loginFormKey.currentState.reset();
@@ -128,7 +118,7 @@ class _LoginState extends State<Login> {
         final email = user.userEmail;
         final password = user.password;
         debugPrint("Email and password are $email + $password");
-        FirebaseUser currentUser = await _signInUser(email, password);
+        FirebaseUser currentUser = await _createUser(email, password);
         setState(() {
           user.userEmail = currentUser.email;
           user.userName = currentUser.displayName;
@@ -153,8 +143,8 @@ class _LoginState extends State<Login> {
     }
   }
 
-  Future _signInUser(email, password) async {
-    final FirebaseUser user = (await _auth.signInWithEmailAndPassword(
+  Future _createUser(email, password) async {
+    final FirebaseUser user = (await _auth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     ))
@@ -165,9 +155,9 @@ class _LoginState extends State<Login> {
   Future<String> signInWithGoogle() async {
     try {
       final GoogleSignInAccount googleSignInAccount =
-          await _googleSignIn.signIn();
+      await _googleSignIn.signIn();
       final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount.authentication;
+      await googleSignInAccount.authentication;
 
       final AuthCredential credential = GoogleAuthProvider.getCredential(
         accessToken: googleSignInAuthentication.accessToken,
@@ -175,7 +165,7 @@ class _LoginState extends State<Login> {
       );
 
       final AuthResult authResult =
-          await _auth.signInWithCredential(credential);
+      await _auth.signInWithCredential(credential);
       final FirebaseUser user = authResult.user;
 
       assert(!user.isAnonymous);
