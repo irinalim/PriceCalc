@@ -1,5 +1,7 @@
 import 'package:PriceCalc/Components/Login.dart';
+import 'package:PriceCalc/Models/user.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -15,6 +17,7 @@ class _HomeState extends State<Home> {
   Color primaryBlue = Color.fromRGBO(81, 109, 141, 1);
   Color primaryYellow = Color.fromRGBO(255, 224, 130, 1);
   Color lightGrey = Color.fromRGBO(238, 238, 238, 1);
+  FirebaseUser user;
 
   void _clearTextFields() {
     FocusScope.of(context).unfocus();
@@ -44,6 +47,18 @@ class _HomeState extends State<Home> {
 //      calcPrice();
     });
   }
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAuth.instance.currentUser().then((currentUser) {
+      if (currentUser != null) {
+        setState(() {
+          user = currentUser;
+        });
+      }
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +76,7 @@ class _HomeState extends State<Home> {
               Padding(
                 padding: EdgeInsets.only(top: 20, bottom: 30),
               ),
+              Text(user.uid),
               Image.asset(
                 'assets/images/pricecalc.png',
                 height: 130,

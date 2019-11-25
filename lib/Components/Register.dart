@@ -1,3 +1,4 @@
+import 'package:PriceCalc/Components/Login.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -12,7 +13,7 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-  final _loginFormKey = GlobalKey<FormState>();
+  final _registerFormKey = GlobalKey<FormState>();
   User user = User("", "", "");
   String _loginAlert = "";
   bool _isInAsyncCall = false;
@@ -21,7 +22,7 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: Text('Register'),
       ),
       body: ListView(
         children: <Widget>[
@@ -31,12 +32,11 @@ class _RegisterState extends State<Register> {
                 Container(
                   width: 500,
                   child: Form(
-                    key: _loginFormKey,
+                    key: _registerFormKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         TextFormField(
-//                          controller: _emailController,
                           decoration: const InputDecoration(
                             icon: Icon(Icons.email),
                             hintText: 'Введите свой email',
@@ -51,7 +51,6 @@ class _RegisterState extends State<Register> {
                           },
                         ),
                         TextFormField(
-//                          controller: _passwordController,
                           obscureText: true,
                           decoration: const InputDecoration(
                             icon: Icon(Icons.lock),
@@ -74,27 +73,6 @@ class _RegisterState extends State<Register> {
                   onPressed: () => handleCreateUser(),
                   child: Text("Create user"),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FlatButton(
-                        child: Text("Google Sign-in"),
-                        onPressed: () => signInWithGoogle(),
-                        color: Colors.blue,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FlatButton(
-                        child: Text("Google Sign-Out"),
-                        onPressed: () => signOutGoogle(),
-                        color: Colors.grey.shade500,
-                      ),
-                    ),
-                  ],
-                ),
                 Text("User is ${user.userId}"),
                 Text(
                   _loginAlert,
@@ -111,9 +89,9 @@ class _RegisterState extends State<Register> {
   }
 
   Future handleCreateUser() async {
-    if (_loginFormKey.currentState.validate()) {
-      _loginFormKey.currentState.save();
-      _loginFormKey.currentState.reset();
+    if (_registerFormKey.currentState.validate()) {
+      _registerFormKey.currentState.save();
+      _registerFormKey.currentState.reset();
       try {
         final email = user.userEmail;
         final password = user.password;
@@ -124,6 +102,10 @@ class _RegisterState extends State<Register> {
           user.userName = currentUser.displayName;
           user.userId = currentUser.uid;
         });
+        var router = new MaterialPageRoute(builder: (BuildContext context) {
+          return Login();
+        });
+        Navigator.of(context).push(router);
         return currentUser;
       } on PlatformException catch (e) {
         print("platform exception");
@@ -180,9 +162,4 @@ class _RegisterState extends State<Register> {
     }
   }
 
-  void signOutGoogle() async {
-    await _googleSignIn.signOut();
-
-    print("User Sign Out");
-  }
 }

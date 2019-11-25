@@ -1,7 +1,9 @@
+import 'package:PriceCalc/Components/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/services.dart' show PlatformException;
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:PriceCalc/Models/user.dart';
 import 'package:PriceCalc/Components/Register.dart';
 
@@ -15,8 +17,29 @@ class _LoginState extends State<Login> {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final _loginFormKey = GlobalKey<FormState>();
   User user = User("", "", "");
+  FirebaseUser currentUser;
   String _loginAlert = "";
   bool _isInAsyncCall = false;
+
+  void _showProgressIndicator() {
+    FocusScope.of(context).requestFocus(new FocusNode());
+    setState(() {
+      _isInAsyncCall = true;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAuth.instance.currentUser().then((currentUser) {
+      if (currentUser != null) {
+        var router = new MaterialPageRoute(builder: (BuildContext context) {
+          return Home();
+        });
+        Navigator.of(context).push(router);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +148,7 @@ class _LoginState extends State<Login> {
       _loginFormKey.currentState.save();
       _loginFormKey.currentState.reset();
       try {
+        _showProgressIndicator();
         final email = user.userEmail;
         final password = user.password;
         debugPrint("Email and password are $email + $password");
@@ -134,6 +158,10 @@ class _LoginState extends State<Login> {
           user.userName = currentUser.displayName;
           user.userId = currentUser.uid;
         });
+        var router = new MaterialPageRoute(builder: (BuildContext context) {
+          return Home();
+        });
+        Navigator.of(context).push(router);
         return currentUser;
       } on PlatformException catch (e) {
         print("platform exception");
