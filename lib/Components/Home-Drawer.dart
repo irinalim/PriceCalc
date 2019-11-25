@@ -26,7 +26,7 @@ Widget homeDrawer(User user, context) {
                     _auth.signOut();
                     await _googleSignIn.signOut();
                     print("User Sign Out");
-                    Navigator.pushReplacementNamed(context, '/home');
+                    Navigator.pushReplacementNamed(context, '/login');
                   },
                   color: Styles.lightGrey,
                   child: new Text(

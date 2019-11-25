@@ -94,7 +94,7 @@ class _HomeState extends State<Home> {
                 Padding(
                   padding: EdgeInsets.only(top: 20, bottom: 30),
                 ),
-                Text(user.userId),
+                Text(user.userId + user.userEmail),
                 Image.asset(
                   'assets/images/pricecalc.png',
                   height: 130,

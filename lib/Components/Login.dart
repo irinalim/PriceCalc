@@ -154,9 +154,7 @@ class _LoginState extends State<Login> {
         debugPrint("Email and password are $email + $password");
         FirebaseUser currentUser = await _signInUser(email, password);
         setState(() {
-          user.userEmail = currentUser.email;
-          user.userName = currentUser.displayName;
-          user.userId = currentUser.uid;
+          user = User.fromSnapshot(currentUser);
         });
         var router = new MaterialPageRoute(builder: (BuildContext context) {
           return Home();
@@ -204,14 +202,21 @@ class _LoginState extends State<Login> {
 
       final AuthResult authResult =
           await _auth.signInWithCredential(credential);
-      final FirebaseUser user = authResult.user;
+      final FirebaseUser fbuser = authResult.user;
 
-      assert(!user.isAnonymous);
-      assert(await user.getIdToken() != null);
+      assert(!fbuser.isAnonymous);
+      assert(await fbuser.getIdToken() != null);
 
       final FirebaseUser currentUser = await _auth.currentUser();
       print(currentUser.uid + currentUser.displayName);
-      assert(user.uid == currentUser.uid);
+      assert(fbuser.uid == currentUser.uid);
+      setState(() {
+        user = User.fromSnapshot(currentUser);
+      });
+      var router = new MaterialPageRoute(builder: (BuildContext context) {
+        return Home();
+      });
+      Navigator.of(context).push(router);
       return 'signInWithGoogle succeeded: $user';
     } on PlatformException catch (e) {
       print(e);
