@@ -8,12 +8,6 @@ import 'Components/SavedItems.dart';
 void main () async {
   Widget _defaultScreen = Login();
 
-  FirebaseAuth.instance.currentUser().then((currentUser) {
-    if (currentUser != null) {
-      _defaultScreen = Home();
-    }
-  });
-
   runApp(MaterialApp(
     title: 'PriceApp',
     theme: ThemeData(

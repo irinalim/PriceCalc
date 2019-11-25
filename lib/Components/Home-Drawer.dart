@@ -1,3 +1,4 @@
+import 'package:PriceCalc/Components/SavedItems.dart';
 import 'package:PriceCalc/Models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,10 @@ Widget homeDrawer(User user, context) {
                 child: Center(
                     child: FlatButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/saved');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SavedItems(user: user)),
+                    );
                   },
                   child: Text("Saved items"),
                 ))),

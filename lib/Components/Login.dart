@@ -197,6 +197,7 @@ class _LoginState extends State<Login> {
 
   Future<String> signInWithGoogle() async {
     try {
+      _showProgressIndicator();
       final GoogleSignInAccount googleSignInAccount =
           await _googleSignIn.signIn();
       final GoogleSignInAuthentication googleSignInAuthentication =
@@ -227,6 +228,8 @@ class _LoginState extends State<Login> {
       return 'signInWithGoogle succeeded: $user';
     } on PlatformException catch (e) {
       print(e);
+      _loginAlert = e.message;
+      _isInAsyncCall = false;
     }
   }
 }
