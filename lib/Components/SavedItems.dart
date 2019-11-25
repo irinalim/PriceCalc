@@ -1,6 +1,5 @@
 import 'package:PriceCalc/Models/item.dart';
 import 'package:PriceCalc/Models/user.dart';
-import 'package:PriceCalc/utils/date_formatter.dart';
 import 'package:PriceCalc/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
@@ -35,7 +34,8 @@ class _SavedItemsState extends State<SavedItems> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Saved Items"),
+        backgroundColor: Styles.primaryBlue,
+        title: Text("Saved Items", textAlign: TextAlign.center,),
       ),
       body: Column(
         children: <Widget>[
@@ -66,10 +66,11 @@ class _SavedItemsState extends State<SavedItems> {
                   var item = Item.fromSnapshot(snapshot);
                   return Card(
                     child: ListTile(
-                      title: Text(item.name),
-                      subtitle: Text(item.pricePerKilo.toString()),
+                      leading: Icon(Icons.shopping_cart),
+                      title: Text(item.name + " from "+ item.seller),
+                      subtitle: Text("Price per kilo: " +item.pricePerKilo.toString()),
                       onTap: () {
-                        showItem(item);
+                        showItem(item, snapshot.key);
                       },
                       trailing: Listener(
                         key: Key(snapshot.key),
@@ -89,7 +90,7 @@ class _SavedItemsState extends State<SavedItems> {
     );
   }
 
-  void showItem(item) {
+  void showItem(item, key) {
     Widget ItemCard = AlertDialog(
       title: Text("Saved Item"),
       content: Container(
@@ -108,6 +109,14 @@ class _SavedItemsState extends State<SavedItems> {
         ),
       ),
       actions: <Widget>[
+
+        FlatButton(
+          onPressed: () {
+            _deleteItem(key);
+            Navigator.of(context).pop();
+          },
+          child: Text("Delete", style: TextStyle(color: Colors.red),),
+        ),
         FlatButton(
           onPressed: () {
             Navigator.of(context).pop();
@@ -121,6 +130,10 @@ class _SavedItemsState extends State<SavedItems> {
         builder: (context) {
           return ItemCard;
         });
+  }
+
+  _deleteItem(key) {
+    databaseReference.child(key).remove();
   }
 
   void _updateItem(item, key) {
