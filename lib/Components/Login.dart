@@ -6,6 +6,7 @@ import 'package:flutter/services.dart' show PlatformException;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:PriceCalc/Models/user.dart';
 import 'package:PriceCalc/Components/Register.dart';
+import 'package:PriceCalc/utils/styles.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -44,101 +45,107 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
-      body: ListView(
-        children: <Widget>[
-          Center(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  width: 500,
-                  child: Form(
-                    key: _loginFormKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            icon: Icon(Icons.email),
-                            hintText: 'Введите свой email',
-                            labelText: 'Email',
-                          ),
-                          onSaved: (value) => user.userEmail = value.trim(),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Введите email';
-                            }
-                            return null;
-                          },
-                        ),
-                        TextFormField(
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            icon: Icon(Icons.lock),
-                            hintText: 'Введите свой пароль',
-                            labelText: 'Пароль',
-                          ),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Введите пароль';
-                            }
-                            return null;
-                          },
-                          onSaved: (value) => user.password = value.trim(),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                RaisedButton(
-                  onPressed: () {
-                    handleSignInUser();
-                  },
-                  child: Text("Login user"),
-                ),
-                RaisedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Register()),
-                    );
-                  },
-                  child: Text("Register"),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+      appBar: AppBar(title: Text('Login'),
+          backgroundColor: Styles.primaryBlue),
+      body: ModalProgressHUD(
+        color: Colors.white,
+        inAsyncCall: _isInAsyncCall,
+        opacity: 0.5,
+        progressIndicator: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(Styles.primaryBlue),
+        ),
+        child: SafeArea(
+          child: ListView(
+            children: <Widget>[
+              Center(
+                child: Column(
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FlatButton(
-                        child: Text("Google Sign-in"),
-                        onPressed: () => signInWithGoogle(),
-                        color: Colors.blue,
+                    Container(
+                      width: 500,
+                      child: Form(
+                        key: _loginFormKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                icon: Icon(Icons.email),
+                                hintText: 'Введите свой email',
+                                labelText: 'Email',
+                              ),
+                              onSaved: (value) => user.userEmail = value.trim(),
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'Введите email';
+                                }
+                                return null;
+                              },
+                            ),
+                            TextFormField(
+                              obscureText: true,
+                              decoration: const InputDecoration(
+                                icon: Icon(Icons.lock),
+                                hintText: 'Введите свой пароль',
+                                labelText: 'Пароль',
+                              ),
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'Введите пароль';
+                                }
+                                return null;
+                              },
+                              onSaved: (value) => user.password = value.trim(),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FlatButton(
-                        child: Text("Google Sign-Out"),
-                        onPressed: () => signOutGoogle(),
-                        color: Colors.grey.shade500,
+                    RaisedButton(
+                      onPressed: () {
+                        handleSignInUser();
+                      },
+                      child: Text("Login user"),
+                    ),
+                    RaisedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Register()),
+                        );
+                      },
+                      child: Text("Register"),
+                    ),
+                    RaisedButton(
+                      child: Text("Google Sign-in"),
+                      onPressed: () => signInWithGoogle(),
+                      color: Colors.blue,
+                    ),
+//                Row(
+//                  mainAxisAlignment: MainAxisAlignment.center,
+//                  children: <Widget>[
+//                    Padding(
+//                      padding: const EdgeInsets.all(8.0),
+//                      child: FlatButton(
+//                        child: Text("Google Sign-in"),
+//                        onPressed: () => signInWithGoogle(),
+//                        color: Colors.blue,
+//                      ),
+//                    ),
+//                  ],
+//                ),
+                    Text("User is ${user.userId}"),
+                    Text(
+                      _loginAlert,
+                      style: TextStyle(
+                        color: Colors.red,
                       ),
                     ),
                   ],
                 ),
-                Text("User is ${user.userId}"),
-                Text(
-                  _loginAlert,
-                  style: TextStyle(
-                    color: Colors.red,
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -221,11 +228,5 @@ class _LoginState extends State<Login> {
     } on PlatformException catch (e) {
       print(e);
     }
-  }
-
-  void signOutGoogle() async {
-    await _googleSignIn.signOut();
-
-    print("User Sign Out");
   }
 }
