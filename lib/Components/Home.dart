@@ -1,4 +1,3 @@
-import 'package:PriceCalc/Components/Login.dart';
 import 'package:PriceCalc/Models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -94,7 +93,10 @@ class _HomeState extends State<Home> {
                 Padding(
                   padding: EdgeInsets.only(top: 20, bottom: 30),
                 ),
-                Text(user.userId + user.userEmail),
+                Text(
+                  user.userEmail,
+                  style: TextStyle(color: Colors.red),
+                ),
                 Image.asset(
                   'assets/images/pricecalc.png',
                   height: 130,
@@ -189,15 +191,6 @@ class _HomeState extends State<Home> {
                             fontWeight: FontWeight.w500,
                             color: Styles.primaryBlue),
                       ),
-                RaisedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Login()),
-                    );
-                  },
-                  child: Text('Sign in with Google'),
-                ),
               ],
             )
           ],

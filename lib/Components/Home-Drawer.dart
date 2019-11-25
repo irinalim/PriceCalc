@@ -14,9 +14,21 @@ Widget homeDrawer(User user, context) {
         color: Styles.primaryYellow,
         child: Column(
           children: <Widget>[
-            Expanded(flex: 3,
+            Expanded(
+              flex: 1,
+              child: Center(
+                child: Text(user.userEmail, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
+              ),
+            ),
+            Expanded(
+                flex: 3,
                 child: Center(
-                    child: Text(user.userEmail))),
+                    child: FlatButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/saved');
+                  },
+                  child: Text("Saved items"),
+                ))),
             Expanded(
               flex: 1,
               child: Container(

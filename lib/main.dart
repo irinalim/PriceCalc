@@ -3,6 +3,8 @@ import 'package:PriceCalc/Components/Home.dart';
 import 'Components/Login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'Components/SavedItems.dart';
+
 void main () async {
   Widget _defaultScreen = Login();
 
@@ -21,7 +23,8 @@ void main () async {
     routes: <String, WidgetBuilder>{
       // Set routes for using the Navigator.
       '/home': (BuildContext context) => Home(),
-      '/login': (BuildContext context) => Login()
+      '/login': (BuildContext context) => Login(),
+      '/saved': (BuildContext context) => SavedItems(),
     },
   ));
 }
