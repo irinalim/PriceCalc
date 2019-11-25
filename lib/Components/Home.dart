@@ -63,7 +63,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     String currency = radioValue == 0 ? "EUR" : "RUB";
     return Scaffold(
-      drawer: homeDrawer(user),
+      drawer: homeDrawer(user, context),
       appBar: AppBar(
         leading: Builder(
           builder: (BuildContext context) {
