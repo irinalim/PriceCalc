@@ -62,7 +62,8 @@ class _HomeState extends State<Home> {
         setState(() {
           user = User.fromSnapshot(currentUser);
         });
-        databaseReference = database.reference().child("items").child(user.userId);
+        databaseReference =
+            database.reference().child("items").child(user.userId);
         databaseReference.onChildAdded.listen(_onEntryAdded);
         databaseReference.onChildChanged.listen(_onEntryChanged);
       }
@@ -224,86 +225,79 @@ class _HomeState extends State<Home> {
   void _saveItem() {
     var alert = Center(
       child: AlertDialog(
-        content: Row(
-          children: <Widget>[
-            Expanded(
-              child: Form(
-                  key: formKey,
-                  child: Container(
+        content: Container(
+          height: 400,
+          child: Form(
+            key: formKey,
+            child: Container(
 //                      height: 400,
-                      child: Column(
-                        children: <Widget>[
-                          TextFormField(
-                            decoration: const InputDecoration(
-                              icon: Icon(Icons.email),
-                              hintText: 'Enter a name',
-                              labelText: 'Name',
-                            ),
-                            initialValue: '',
-                            onSaved: (val) {
-                              print(item);
-                              debugPrint(val);
-                              item.dateAdded = dateFormatted();
-                              item.name = val;
-                            },
-                            validator: (val) => val == "" ? val : null,
-                          ),
-                          TextFormField(
-                            keyboardType: TextInputType.number,
-                            initialValue: (_weightController.text),
-                            decoration: const InputDecoration(
-                              icon: Icon(Icons.email),
-                              hintText: 'Enter a price',
-                              labelText: 'Price',
-                            ),
-                            onSaved: (val) {
-                              item.price = double.parse(val);
-                            },
-                            validator: (val) => val == "" ? val : null,
-                          ),
-                          TextFormField(
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              icon: Icon(Icons.email),
-                              hintText: 'weight',
-                              labelText: 'Weight',
-                            ),
-                            initialValue: _weightController.text,
-                            onSaved: (val) {
-                              item.weight = double.parse(val);
-                            },
-                            validator: (val) => val == "" ? val : null,
-                          ),
-                          TextFormField(
-                            keyboardType: TextInputType.number,
-                            decoration: const InputDecoration(
-                              icon: Icon(Icons.email),
-                              hintText: 'price per kilo',
-                              labelText: 'price per kilo',
-                            ),
-                            initialValue: priceForKilo,
-                            onSaved: (val) {
-                              item.pricePerKilo = double.parse(val);
-                            },
-                            validator: (val) => val == "" ? val : null,
-                          ),
-                          TextFormField(
-                            decoration: const InputDecoration(
-                              icon: Icon(Icons.email),
-                              hintText: 'seller',
-                              labelText: 'Seller',
-                            ),
-                            initialValue: '',
-                            onSaved: (val) {
-                              item.seller = val;
-                            },
-                            validator: (val) => val == "" ? val : null,
-                          ),
-                        ],
-                      )
-                      )),
+              child: Column(
+                children: <Widget>[
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: 'Enter a name',
+                      labelText: 'Name',
+                    ),
+                    initialValue: '',
+                    onSaved: (val) {
+                      print(item);
+                      debugPrint(val);
+                      item.dateAdded = dateFormatted();
+                      item.name = val;
+                    },
+                    validator: (val) => val == "" ? val : null,
+                  ),
+                  TextFormField(
+                    keyboardType: TextInputType.number,
+                    initialValue: (_weightController.text),
+                    decoration: const InputDecoration(
+                      hintText: 'Enter a price',
+                      labelText: 'Price',
+                    ),
+                    onSaved: (val) {
+                      item.price = double.parse(val);
+                    },
+                    validator: (val) => val == "" ? val : null,
+                  ),
+                  TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      hintText: 'weight',
+                      labelText: 'Weight',
+                    ),
+                    initialValue: _weightController.text,
+                    onSaved: (val) {
+                      item.weight = double.parse(val);
+                    },
+                    validator: (val) => val == "" ? val : null,
+                  ),
+                  TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      hintText: 'price per kilo',
+                      labelText: 'price per kilo',
+                    ),
+                    initialValue: priceForKilo,
+                    onSaved: (val) {
+                      item.pricePerKilo = double.parse(val);
+                    },
+                    validator: (val) => val == "" ? val : null,
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: 'seller',
+                      labelText: 'Seller',
+                    ),
+                    initialValue: '',
+                    onSaved: (val) {
+                      item.seller = val;
+                    },
+                    validator: (val) => val == "" ? val : null,
+                  ),
+                ],
+              ),
             ),
-          ],
+          ),
         ),
         actions: <Widget>[
           FlatButton(

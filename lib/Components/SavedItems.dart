@@ -27,15 +27,25 @@ class _SavedItemsState extends State<SavedItems> {
     databaseReference =
         database.reference().child("items").child(widget.user.userId);
     print(widget.user.userId);
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Styles.primaryBlue,
-        title: Text("Saved Items", textAlign: TextAlign.center,),
+        backgroundColor: Styles.primaryYellow,
+        title: Text(
+          "Saved Items",
+          style: TextStyle(color: Styles.blueGrey),
+        ),
+        centerTitle: true,
+        leading: Builder(
+          builder: (BuildContext context) {
+            return BackButton(
+              color: Styles.blueGrey,
+            );
+          },
+        ),
       ),
       body: Column(
         children: <Widget>[
@@ -66,21 +76,14 @@ class _SavedItemsState extends State<SavedItems> {
                   var item = Item.fromSnapshot(snapshot);
                   return Card(
                     child: ListTile(
-                      leading: Icon(Icons.shopping_cart),
-                      title: Text(item.name + " from "+ item.seller),
-                      subtitle: Text("Price per kilo: " +item.pricePerKilo.toString()),
-                      onTap: () {
-                        showItem(item, snapshot.key);
-                      },
-                      trailing: Listener(
-                        key: Key(snapshot.key),
-                        child: Icon(
-                          Icons.create,
-                          color: Colors.black54,
-                        ),
-                        onPointerDown: (pointerEvent) =>
-                            _updateItem(item, snapshot.key),
+                      leading: Icon(
+                        Icons.shopping_cart,
+                        color: Styles.primaryBlue,
                       ),
+                      title: Text(item.name),
+                      subtitle: Text(item.seller),
+                      onTap: () => showItem(item, snapshot.key),
+                      trailing: Text(item.pricePerKilo.toString(), style: Styles.header2TextStyle,)
                     ),
                   );
                 }),
@@ -94,28 +97,64 @@ class _SavedItemsState extends State<SavedItems> {
     Widget ItemCard = AlertDialog(
       title: Text("Saved Item"),
       content: Container(
-        height: 120,
+        height: 180,
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Text("Name: ${item.name}"),
-              Text("Seller: ${item.seller}"),
-              Text("Price: ${item.price}"),
-              Text("Weight: ${item.weight}"),
-              Text("Price per kilo: ${item.pricePerKilo}"),
-              Text("Added: ${item.dateAdded}"),
+              Text(
+                "Name: ${item.name}",
+                style: Styles.header5TextStyle,
+                textAlign: TextAlign.left,
+              ),
+              Text(
+                "Seller: ${item.seller}",
+                style: Styles.header5TextStyle,
+                textAlign: TextAlign.left,
+              ),
+              Text(
+                "Price: ${item.price}",
+                style: Styles.header5TextStyle,
+                textAlign: TextAlign.left,
+              ),
+              Text(
+                "Weight: ${item.weight}",
+                style: Styles.header5TextStyle,
+                textAlign: TextAlign.left,
+              ),
+              Text(
+                "Price per kilo: ${item.pricePerKilo}",
+                style: Styles.header5TextStyle,
+                textAlign: TextAlign.left,
+              ),
+              Text(
+                "Added: ${item.dateAdded}",
+                style: Styles.header5TextStyle,
+                textAlign: TextAlign.left,
+              ),
             ],
           ),
         ),
       ),
       actions: <Widget>[
-
         FlatButton(
           onPressed: () {
             _deleteItem(key);
             Navigator.of(context).pop();
           },
-          child: Text("Delete", style: TextStyle(color: Colors.red),),
+          child: Text(
+            "Delete",
+            style: TextStyle(color: Colors.red),
+          ),
+        ),
+        FlatButton(
+          onPressed: () {
+            _updateItem(item, key);
+            Navigator.of(context).pop();
+          },
+          child: Text(
+            "Update", style: TextStyle(color: Colors.green),
+          ),
         ),
         FlatButton(
           onPressed: () {
@@ -139,94 +178,90 @@ class _SavedItemsState extends State<SavedItems> {
   void _updateItem(item, key) {
     var alert = Center(
       child: AlertDialog(
-        content: Row(
-          children: <Widget>[
-            Expanded(
-              child: Form(
+        content: Container(
+          height: 400,
+          width: 250,
+          child: ListView(
+            children: <Widget>[
+              Form(
                   key: formKey2,
                   child: Container(
-                      height: 400,
+                      height: 420,
                       child: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          icon: Icon(Icons.email),
-                          hintText: 'Enter a name',
-                          labelText: 'Name',
-                        ),
-                        initialValue: item.name,
-                        onSaved: (val) {
-                          item.name = val;
-                        },
-                        validator: (val) => val == "" ? val : null,
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.number,
-                        initialValue: item.price.toString(),
-                        decoration: const InputDecoration(
-                          icon: Icon(Icons.email),
-                          hintText: 'Enter a price',
-                          labelText: 'Price',
-                        ),
-                        onSaved: (val) {
-                          item.price = double.parse(val);
-                        },
-                        validator: (val) => val == "" ? val : null,
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          icon: Icon(Icons.email),
-                          hintText: 'weight',
-                          labelText: 'Weight',
-                        ),
-                        initialValue: item.weight.toString(),
-                        onSaved: (val) {
-                          item.weight = double.parse(val);
-                        },
-                        validator: (val) => val == "" ? val : null,
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          icon: Icon(Icons.email),
-                          hintText: 'price per kilo',
-                          labelText: 'price per kilo',
-                        ),
-                        initialValue: item.pricePerKilo.toString(),
-                        onSaved: (val) {
-                          item.pricePerKilo = double.parse(val);
-                        },
-                        validator: (val) => val == "" ? val : null,
-                      ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          icon: Icon(Icons.email),
-                          hintText: 'seller',
-                          labelText: 'Seller',
-                        ),
-                        initialValue: item.seller,
-                        onSaved: (val) {
-                          item.seller = val;
-                        },
-                        validator: (val) => val == "" ? val : null,
-                      ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          icon: Icon(Icons.email),
-                          hintText: 'date',
-                          labelText: 'Date',
-                        ),
-                        initialValue: item.dateAdded,
-                        onSaved: (val) {
-                          item.seller = val;
-                        },
-                        validator: (val) => val == "" ? val : null,
-                      ),
-                    ],
-                  ))),
-            ),
-          ],
+                        children: <Widget>[
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              hintText: 'Enter a name',
+                              labelText: 'Name',
+                            ),
+                            initialValue: item.name,
+                            onSaved: (val) {
+                              item.name = val;
+                            },
+                            validator: (val) => val == "" ? val : null,
+                          ),
+                          TextFormField(
+                            keyboardType: TextInputType.number,
+                            initialValue: item.price.toString(),
+                            decoration: const InputDecoration(
+                              hintText: 'Enter a price',
+                              labelText: 'Price',
+                            ),
+                            onSaved: (val) {
+                              item.price = double.parse(val);
+                            },
+                            validator: (val) => val == "" ? val : null,
+                          ),
+                          TextFormField(
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(
+                              hintText: 'weight',
+                              labelText: 'Weight',
+                            ),
+                            initialValue: item.weight.toString(),
+                            onSaved: (val) {
+                              item.weight = double.parse(val);
+                            },
+                            validator: (val) => val == "" ? val : null,
+                          ),
+                          TextFormField(
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(
+                              hintText: 'price per kilo',
+                              labelText: 'price per kilo',
+                            ),
+                            initialValue: item.pricePerKilo.toString(),
+                            onSaved: (val) {
+                              item.pricePerKilo = double.parse(val);
+                            },
+                            validator: (val) => val == "" ? val : null,
+                          ),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              hintText: 'seller',
+                              labelText: 'Seller',
+                            ),
+                            initialValue: item.seller,
+                            onSaved: (val) {
+                              item.seller = val;
+                            },
+                            validator: (val) => val == "" ? val : null,
+                          ),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              hintText: 'date',
+                              labelText: 'Date',
+                            ),
+                            initialValue: item.dateAdded,
+                            onSaved: (val) {
+                              item.dateAdded = val;
+                            },
+                            validator: (val) => val == "" ? val : null,
+                          ),
+                        ],
+                      )))
+            ],
+          ),
         ),
         actions: <Widget>[
           FlatButton(

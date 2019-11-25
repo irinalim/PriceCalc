@@ -18,20 +18,21 @@ Widget homeDrawer(User user, context) {
             Expanded(
               flex: 1,
               child: Center(
-                child: Text(user.userEmail, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),),
+                child: Text(user.userEmail, style: Styles.header2TextStyle,),
               ),
             ),
             Expanded(
                 flex: 3,
                 child: Center(
-                    child: FlatButton(
+                    child: RaisedButton(
+                      color: Colors.white,
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => SavedItems(user: user)),
                     );
                   },
-                  child: Text("Saved items"),
+                  child: Text("Saved items", style: Styles.header2TextStyle,),
                 ))),
             Expanded(
               flex: 1,
