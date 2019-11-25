@@ -64,8 +64,6 @@ class _HomeState extends State<Home> {
         });
         databaseReference =
             database.reference().child("items").child(user.userId);
-        databaseReference.onChildAdded.listen(_onEntryAdded);
-        databaseReference.onChildChanged.listen(_onEntryChanged);
       }
     });
   }
@@ -329,30 +327,5 @@ class _HomeState extends State<Home> {
       form.reset();
       databaseReference.push().set(item.toJson());
     }
-  }
-
-//    final FormState form = formKey.currentState;
-//    if (form.validate()) {
-//      form.save();
-//      form.reset();
-//      //save form data to the database
-//      databaseReference.push().set(item.toJson());
-//    }}
-
-  void _onEntryAdded(Event event) {
-    setState(() {
-      savedItems.add(Item.fromSnapshot(event.snapshot));
-    });
-  }
-
-  void _onEntryChanged(Event event) {
-    var oldEntry = savedItems.singleWhere((entry) {
-      return entry.key == event.snapshot.key;
-    });
-
-    setState(() {
-      savedItems[savedItems.indexOf(oldEntry)] =
-          Item.fromSnapshot(event.snapshot);
-    });
   }
 }

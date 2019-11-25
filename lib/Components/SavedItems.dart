@@ -149,8 +149,9 @@ class _SavedItemsState extends State<SavedItems> {
         ),
         FlatButton(
           onPressed: () {
-            _updateItem(item, key);
             Navigator.of(context).pop();
+            debugPrint("UPDATE");
+            _updateItem(item, key);
           },
           child: Text(
             "Update", style: TextStyle(color: Colors.green),
@@ -176,6 +177,7 @@ class _SavedItemsState extends State<SavedItems> {
   }
 
   void _updateItem(item, key) {
+    debugPrint("UPDATE CALLED");
     var alert = Center(
       child: AlertDialog(
         content: Container(
