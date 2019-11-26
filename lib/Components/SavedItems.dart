@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-
 import 'UpdateItemDialog.dart';
 
 class SavedItems extends StatefulWidget {
@@ -51,6 +50,8 @@ class _SavedItemsState extends State<SavedItems> {
         children: <Widget>[
           Flexible(
             child: FirebaseAnimatedList(
+                sort: (DataSnapshot a, DataSnapshot b) =>
+                    a.value["name"].compareTo(b.value["name"]),
                 query: databaseReference,
                 itemBuilder: (_, DataSnapshot snapshot,
                     Animation<double> animation, int index) {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:PriceCalc/utils/date_formatter.dart';
 import 'package:PriceCalc/Models/item.dart';
 
 class UpdateItemDialog extends StatefulWidget {

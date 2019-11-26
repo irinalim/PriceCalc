@@ -29,7 +29,6 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
   DatabaseReference databaseReference;
   Item item = Item("", 0, 0, 0, "", "", "");
   int radioValue;
-//  String currency;
 
   void handleRadioValueChanged(int value) {
     setState(() {
