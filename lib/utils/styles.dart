@@ -19,4 +19,11 @@ class Styles {
     fontWeight: FontWeight.w800,
     color: blueGrey,
   );
+
+  static final header3TextStyle = TextStyle(
+    height: 1.5,
+    fontSize: 18,
+    fontWeight: FontWeight.w800,
+    color: blueGrey,
+  );
 }

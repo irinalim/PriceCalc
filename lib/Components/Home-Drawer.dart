@@ -12,28 +12,51 @@ Widget homeDrawer(User user, context) {
   return Drawer(
     child: SafeArea(
       child: Container(
-        color: Styles.primaryYellow,
         child: Column(
           children: <Widget>[
             Expanded(
-              flex: 1,
-              child: Center(
-                child: Text(user.userEmail, style: Styles.header2TextStyle,),
+              flex: 2,
+              child: Container(
+                color: Styles.primaryYellow,
+                child: Center(
+                  child: Text(
+                    user.userEmail,
+                    style: Styles.header3TextStyle,
+                  ),
+                ),
               ),
             ),
             Expanded(
-                flex: 3,
-                child: Center(
-                    child: RaisedButton(
-                      color: Colors.white,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SavedItems(user: user)),
-                    );
-                  },
-                  child: Text("Saved items", style: Styles.header2TextStyle,),
-                ))),
+              flex: 3,
+              child: Center(
+                child: Container(
+                  height: 70,
+                  child: FlatButton(
+//                      color: Colors.white,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SavedItems(user: user)),
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          Icons.bookmark_border,
+                          color: Styles.blueGrey,
+                        ),
+                        Text(
+                          "  Saved items",
+                          style: Styles.header2TextStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Expanded(
               flex: 1,
               child: Container(
