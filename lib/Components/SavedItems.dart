@@ -100,7 +100,7 @@ class _SavedItemsState extends State<SavedItems> {
                         subtitle: Text(item.seller),
                         onTap: () => showItem(item, snapshot.key),
                         trailing: Text(
-                          item.pricePerKilo.toString(),
+                          item.pricePerKilo.toString()  + " " + item.currency,
                           style: Styles.header2TextStyle,
                         )),
                   );
