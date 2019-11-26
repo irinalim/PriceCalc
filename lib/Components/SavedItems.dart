@@ -18,8 +18,16 @@ class SavedItems extends StatefulWidget {
 class _SavedItemsState extends State<SavedItems> {
   final FirebaseDatabase database = FirebaseDatabase.instance;
   DatabaseReference databaseReference;
-  List<Item> savedItems = List();
+//  List<Item> savedItems = List();
   final GlobalKey<FormState> formKey2 = GlobalKey<FormState>();
+  int radioValue = 0;
+  String currency = 'EUR';
+
+  void handleRadioValueChanged(int value) {
+    setState(() {
+      radioValue = value;
+    });
+  }
 
   @override
   void initState() {
@@ -113,17 +121,17 @@ class _SavedItemsState extends State<SavedItems> {
                 textAlign: TextAlign.left,
               ),
               Text(
-                "Price: ${item.price}",
+                "Price: ${item.price} ${item.currency}",
                 style: Styles.header5TextStyle,
                 textAlign: TextAlign.left,
               ),
               Text(
-                "Weight: ${item.weight}",
+                "Weight: ${item.weight} g",
                 style: Styles.header5TextStyle,
                 textAlign: TextAlign.left,
               ),
               Text(
-                "Price per kilo: ${item.pricePerKilo}",
+                "Price per kilo: ${item.pricePerKilo} ${item.currency}" ,
                 style: Styles.header5TextStyle,
                 textAlign: TextAlign.left,
               ),
@@ -188,12 +196,11 @@ class _SavedItemsState extends State<SavedItems> {
               Form(
                   key: formKey2,
                   child: Container(
-                      height: 420,
                       child: Column(
                         children: <Widget>[
                           TextFormField(
                             decoration: const InputDecoration(
-                              hintText: 'Enter a name',
+                              hintText: 'Bread',
                               labelText: 'Name',
                             ),
                             initialValue: item.name,
@@ -206,7 +213,7 @@ class _SavedItemsState extends State<SavedItems> {
                             keyboardType: TextInputType.number,
                             initialValue: item.price.toString(),
                             decoration: const InputDecoration(
-                              hintText: 'Enter a price',
+                              hintText: 'Enter price',
                               labelText: 'Price',
                             ),
                             onSaved: (val) {
@@ -214,10 +221,28 @@ class _SavedItemsState extends State<SavedItems> {
                             },
                             validator: (val) => val == "" ? val : null,
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text("Currency"),
+                              Radio<int>(
+                                value: 0,
+                                groupValue: radioValue,
+                                onChanged: handleRadioValueChanged,
+                              ),
+                              Text('EUR'),
+                              Radio<int>(
+                                value: 1,
+                                groupValue: radioValue,
+                                onChanged: handleRadioValueChanged,
+                              ),
+                              Text('RUB')
+                            ],
+                          ),
                           TextFormField(
                             keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
-                              hintText: 'weight',
+                              hintText: 'Enter weight',
                               labelText: 'Weight',
                             ),
                             initialValue: item.weight.toString(),
@@ -229,7 +254,7 @@ class _SavedItemsState extends State<SavedItems> {
                           TextFormField(
                             keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
-                              hintText: 'price per kilo',
+                              hintText: 'Price per kilo',
                               labelText: 'price per kilo',
                             ),
                             initialValue: item.pricePerKilo.toString(),
@@ -240,7 +265,7 @@ class _SavedItemsState extends State<SavedItems> {
                           ),
                           TextFormField(
                             decoration: const InputDecoration(
-                              hintText: 'seller',
+                              hintText: 'Lidl',
                               labelText: 'Seller',
                             ),
                             initialValue: item.seller,
@@ -251,7 +276,7 @@ class _SavedItemsState extends State<SavedItems> {
                           ),
                           TextFormField(
                             decoration: const InputDecoration(
-                              hintText: 'date',
+                              hintText: "10:20, Nov 21, 2019",
                               labelText: 'Date',
                             ),
                             initialValue: item.dateAdded,

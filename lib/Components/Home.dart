@@ -18,9 +18,9 @@ class _HomeState extends State<Home> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final FirebaseDatabase database = FirebaseDatabase.instance;
   DatabaseReference databaseReference;
-  Item item = Item("", 0, 0, 0, "", "");
+  Item item = Item("", 0, 0, 0, "", "", "");
   List<Item> savedItems = List();
-  String priceForKilo = '';
+  String pricePerKilo = '';
   int radioValue = 0;
   String currency = 'EUR';
   User user = User("", "", "");
@@ -30,7 +30,7 @@ class _HomeState extends State<Home> {
     setState(() {
       _priceController.clear();
       _weightController.clear();
-      priceForKilo = "";
+      pricePerKilo = "";
     });
   }
 
@@ -42,7 +42,7 @@ class _HomeState extends State<Home> {
       if (_priceController.text.isNotEmpty &&
           _priceController.text.isNotEmpty) {
         double priceDouble = 1000 * price / weight;
-        priceForKilo = priceDouble.toStringAsFixed(2);
+        pricePerKilo = priceDouble.toStringAsFixed(2);
       }
     });
   }
@@ -50,7 +50,6 @@ class _HomeState extends State<Home> {
   void handleRadioValueChanged(int value) {
     setState(() {
       radioValue = value;
-//      calcPrice();
     });
   }
 
@@ -194,7 +193,7 @@ class _HomeState extends State<Home> {
                         textAlign: TextAlign.center,
                       )
                     : Text(
-                        "$priceForKilo $currency/kg",
+                        "$pricePerKilo $currency/kg",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 30,
@@ -225,76 +224,100 @@ class _HomeState extends State<Home> {
       child: AlertDialog(
         content: Container(
           height: 400,
-          child: Form(
-            key: formKey,
-            child: Container(
-//                      height: 400,
-              child: Column(
-                children: <Widget>[
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: 'Enter a name',
-                      labelText: 'Name',
-                    ),
-                    initialValue: '',
-                    onSaved: (val) {
-                      print(item);
-                      debugPrint(val);
-                      item.dateAdded = dateFormatted();
-                      item.name = val;
-                    },
-                    validator: (val) => val == "" ? val : null,
+          width: 250,
+          child: ListView(
+            children: <Widget>[
+              Form(
+                key: formKey,
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: 'Bread',
+                          labelText: 'Name',
+                        ),
+                        initialValue: '',
+                        onSaved: (val) {
+                          print(item);
+                          debugPrint(val);
+                          item.dateAdded = dateFormatted();
+                          item.name = val;
+                          item.currency = currency;
+                        },
+                        validator: (val) => val == "" ? val : null,
+                      ),
+                      TextFormField(
+                        keyboardType: TextInputType.number,
+                        initialValue: (_weightController.text),
+                        decoration: const InputDecoration(
+                          hintText: 'Enter price',
+                          labelText: 'Price',
+                        ),
+                        onSaved: (val) {
+                          item.price = double.parse(val);
+                        },
+                        validator: (val) => val == "" ? val : null,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text("Currency"),
+                          Radio<int>(
+                            value: 0,
+                            groupValue: radioValue,
+                            onChanged: handleRadioValueChanged,
+                          ),
+                          Text('EUR'),
+                          Radio<int>(
+                            value: 1,
+                            groupValue: radioValue,
+                            onChanged: handleRadioValueChanged,
+                          ),
+                          Text('RUB')
+                        ],
+                      ),
+                      TextFormField(
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter weight',
+                          labelText: 'Weight',
+                          suffixText: "g",
+                        ),
+                        initialValue: _weightController.text,
+                        onSaved: (val) {
+                          item.weight = double.parse(val);
+                        },
+                        validator: (val) => val == "" ? val : null,
+                      ),
+                      TextFormField(
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          hintText: 'Price per kilo',
+                          labelText: 'Price per kilo',
+                        ),
+                        initialValue: pricePerKilo,
+                        onSaved: (val) {
+                          item.pricePerKilo = double.parse(val);
+                        },
+                        validator: (val) => val == "" ? val : null,
+                      ),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: 'Lidl',
+                          labelText: 'Seller',
+                        ),
+                        initialValue: '',
+                        onSaved: (val) {
+                          item.seller = val;
+                        },
+                        validator: (val) => val == "" ? val : null,
+                      ),
+                    ],
                   ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    initialValue: (_weightController.text),
-                    decoration: const InputDecoration(
-                      hintText: 'Enter a price',
-                      labelText: 'Price',
-                    ),
-                    onSaved: (val) {
-                      item.price = double.parse(val);
-                    },
-                    validator: (val) => val == "" ? val : null,
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      hintText: 'weight',
-                      labelText: 'Weight',
-                    ),
-                    initialValue: _weightController.text,
-                    onSaved: (val) {
-                      item.weight = double.parse(val);
-                    },
-                    validator: (val) => val == "" ? val : null,
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      hintText: 'price per kilo',
-                      labelText: 'price per kilo',
-                    ),
-                    initialValue: priceForKilo,
-                    onSaved: (val) {
-                      item.pricePerKilo = double.parse(val);
-                    },
-                    validator: (val) => val == "" ? val : null,
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: 'seller',
-                      labelText: 'Seller',
-                    ),
-                    initialValue: '',
-                    onSaved: (val) {
-                      item.seller = val;
-                    },
-                    validator: (val) => val == "" ? val : null,
-                  ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
         actions: <Widget>[

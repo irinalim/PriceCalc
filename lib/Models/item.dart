@@ -10,8 +10,9 @@ class Item {
   double weight;
   String seller;
   String dateAdded;
+  String currency;
 
-  Item(this.name, this.price, this.pricePerKilo, this.weight, this.seller, this.dateAdded);
+  Item(this.name, this.price, this.pricePerKilo, this.weight, this.seller, this.dateAdded, this.currency);
 
   Item.fromSnapshot(DataSnapshot snapshot)
       :
@@ -21,7 +22,8 @@ class Item {
         pricePerKilo = double.parse(snapshot.value["pricePerKilo"].toString()),
         weight = double.parse(snapshot.value["weight"].toString()),
         seller = snapshot.value["seller"],
-        dateAdded = snapshot.value["dateAdded"];
+        dateAdded = snapshot.value["dateAdded"],
+        currency = snapshot.value["currency"];
 
   toJson() {
     return {
@@ -31,6 +33,7 @@ class Item {
       "weight": weight,
       "seller": seller,
       "dateAdded": dateAdded,
+      "currency" : currency,
     };
   }
 }
