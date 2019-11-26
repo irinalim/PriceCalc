@@ -1,11 +1,9 @@
-import 'package:PriceCalc/Models/item.dart';
+import 'package:PriceCalc/Components/SaveItemDialog.dart';
 import 'package:PriceCalc/Models/user.dart';
-import 'package:PriceCalc/utils/date_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:PriceCalc/Components/Home-Drawer.dart';
 import 'package:PriceCalc/utils/styles.dart';
-import 'package:firebase_database/firebase_database.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -16,10 +14,6 @@ class _HomeState extends State<Home> {
   final TextEditingController _priceController = new TextEditingController();
   final TextEditingController _weightController = new TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final FirebaseDatabase database = FirebaseDatabase.instance;
-  DatabaseReference databaseReference;
-  Item item = Item("", 0, 0, 0, "", "", "");
-  List<Item> savedItems = List();
   String pricePerKilo = '';
   int radioValue = 0;
   String currency = 'EUR';
@@ -61,8 +55,6 @@ class _HomeState extends State<Home> {
         setState(() {
           user = User.fromSnapshot(currentUser);
         });
-        databaseReference =
-            database.reference().child("items").child(user.userId);
       }
     });
   }
@@ -104,6 +96,10 @@ class _HomeState extends State<Home> {
                 ),
                 Text(
                   user.userEmail,
+                  style: TextStyle(color: Colors.red),
+                ),
+                Text(
+                  user.userId,
                   style: TextStyle(color: Colors.red),
                 ),
                 Image.asset(
@@ -204,7 +200,16 @@ class _HomeState extends State<Home> {
                   child: MaterialButton(
                     minWidth: 130,
                     onPressed: () {
-                      _saveItem();
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return SaveItemDialog(
+                              userId: user.userId,
+                              price: _priceController.text,
+                              weight: _weightController.text,
+                              pricePerKilo: pricePerKilo,
+                            );
+                          });
                     },
                     color: Styles.lightGrey,
                     child: new Text("Save item",
@@ -217,138 +222,5 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
-  }
-
-  void _saveItem() {
-    var alert = Center(
-      child: AlertDialog(
-        content: Container(
-          height: 400,
-          width: 250,
-          child: ListView(
-            children: <Widget>[
-              Form(
-                key: formKey,
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: 'Bread',
-                          labelText: 'Name',
-                        ),
-                        initialValue: '',
-                        onSaved: (val) {
-                          print(item);
-                          debugPrint(val);
-                          item.dateAdded = dateFormatted();
-                          item.name = val;
-                          item.currency = currency;
-                        },
-                        validator: (val) => val == "" ? val : null,
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.number,
-                        initialValue: (_weightController.text),
-                        decoration: const InputDecoration(
-                          hintText: 'Enter price',
-                          labelText: 'Price',
-                        ),
-                        onSaved: (val) {
-                          item.price = double.parse(val);
-                        },
-                        validator: (val) => val == "" ? val : null,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text("Currency"),
-                          Radio<int>(
-                            value: 0,
-                            groupValue: radioValue,
-                            onChanged: handleRadioValueChanged,
-                          ),
-                          Text('EUR'),
-                          Radio<int>(
-                            value: 1,
-                            groupValue: radioValue,
-                            onChanged: handleRadioValueChanged,
-                          ),
-                          Text('RUB')
-                        ],
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter weight',
-                          labelText: 'Weight',
-                          suffixText: "g",
-                        ),
-                        initialValue: _weightController.text,
-                        onSaved: (val) {
-                          item.weight = double.parse(val);
-                        },
-                        validator: (val) => val == "" ? val : null,
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          hintText: 'Price per kilo',
-                          labelText: 'Price per kilo',
-                        ),
-                        initialValue: pricePerKilo,
-                        onSaved: (val) {
-                          item.pricePerKilo = double.parse(val);
-                        },
-                        validator: (val) => val == "" ? val : null,
-                      ),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: 'Lidl',
-                          labelText: 'Seller',
-                        ),
-                        initialValue: '',
-                        onSaved: (val) {
-                          item.seller = val;
-                        },
-                        validator: (val) => val == "" ? val : null,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          FlatButton(
-            color: Colors.white,
-            onPressed: () {
-              handleSubmit();
-              Navigator.pop(context);
-            },
-            child: Text("Save"),
-          ),
-          FlatButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text("Cancel"),
-          )
-        ],
-      ),
-    );
-    showDialog(
-        context: context,
-        builder: (context) {
-          return alert;
-        });
-  }
-
-  void handleSubmit() {
-    final FormState form = formKey.currentState;
-    if (form.validate()) {
-      form.save();
-      form.reset();
-      databaseReference.push().set(item.toJson());
-    }
   }
 }

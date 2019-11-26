@@ -20,14 +20,7 @@ class _SavedItemsState extends State<SavedItems> {
   DatabaseReference databaseReference;
 //  List<Item> savedItems = List();
   final GlobalKey<FormState> formKey2 = GlobalKey<FormState>();
-  int radioValue = 0;
-  String currency = 'EUR';
 
-  void handleRadioValueChanged(int value) {
-    setState(() {
-      radioValue = value;
-    });
-  }
 
   @override
   void initState() {
@@ -185,6 +178,16 @@ class _SavedItemsState extends State<SavedItems> {
   }
 
   void _updateItem(item, key) {
+    int radioValue;
+//  String currency = 'EUR';
+
+    void handleRadioValueChanged(int value) {
+      setState(() {
+        radioValue = value;
+      });
+    }
+
+    String currency = radioValue == 0 ? "EUR" : "RUB";
     debugPrint("UPDATE CALLED");
     var alert = Center(
       child: AlertDialog(
