@@ -208,6 +208,7 @@ class _HomeState extends State<Home> {
                               price: _priceController.text,
                               weight: _weightController.text,
                               pricePerKilo: pricePerKilo,
+                              currency: currency,
                             );
                           });
                     },

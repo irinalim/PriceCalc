@@ -48,6 +48,7 @@ class _UpdateItemDialogState extends State<UpdateItemDialog> {
   void initState() {
     super.initState();
     databaseReference = database.reference().child("items").child(widget.userId);
+    radioValue = widget.item.currency == "EUR" ? 0 : 1;
   }
 
   @override

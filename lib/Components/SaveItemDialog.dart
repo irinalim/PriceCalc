@@ -8,13 +8,15 @@ class SaveItemDialog extends StatefulWidget {
   final String price;
   final String weight;
   final String pricePerKilo;
+  final String currency;
 
   SaveItemDialog(
       {Key key,
       this.userId,
       this.price,
       this.weight,
-      this.pricePerKilo})
+      this.pricePerKilo,
+      this.currency})
       : super(key: key);
 
   @override
@@ -27,7 +29,7 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
   DatabaseReference databaseReference;
   Item item = Item("", 0, 0, 0, "", "", "");
   int radioValue;
-  String currency;
+//  String currency;
 
   void handleRadioValueChanged(int value) {
     setState(() {
@@ -48,6 +50,7 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
   void initState() {
     super.initState();
     databaseReference = database.reference().child("items").child(widget.userId);
+    radioValue = widget.currency == 'EUR' ? 0 : 1;
   }
 
   @override
