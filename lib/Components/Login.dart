@@ -58,68 +58,89 @@ class _LoginState extends State<Login> {
           child: ListView(
             children: <Widget>[
               Center(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      width: 500,
-                      child: Form(
-                        key: _loginFormKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            TextFormField(
-                              decoration: const InputDecoration(
-                                icon: Icon(Icons.email),
-                                hintText: 'Введите свой email',
-                                labelText: 'Email',
+                child: Container(
+                  padding: EdgeInsets.only(top: 20),
+                  width: MediaQuery.of(context).size.shortestSide - 40,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        width: 500,
+                        child: Form(
+                          key: _loginFormKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              TextFormField(
+                                decoration: const InputDecoration(
+                                  icon: Icon(Icons.email),
+                                  hintText: 'Введите свой email',
+                                  labelText: 'Email',
+                                ),
+                                onSaved: (value) => user.userEmail = value.trim(),
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return 'Введите email';
+                                  }
+                                  return null;
+                                },
                               ),
-                              onSaved: (value) => user.userEmail = value.trim(),
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return 'Введите email';
-                                }
-                                return null;
-                              },
-                            ),
-                            TextFormField(
-                              obscureText: true,
-                              decoration: const InputDecoration(
-                                icon: Icon(Icons.lock),
-                                hintText: 'Введите свой пароль',
-                                labelText: 'Пароль',
+                              TextFormField(
+                                obscureText: true,
+                                decoration: const InputDecoration(
+                                  icon: Icon(Icons.lock),
+                                  hintText: 'Введите свой пароль',
+                                  labelText: 'Пароль',
+                                ),
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return 'Введите пароль';
+                                  }
+                                  return null;
+                                },
+                                onSaved: (value) => user.password = value.trim(),
                               ),
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return 'Введите пароль';
-                                }
-                                return null;
-                              },
-                              onSaved: (value) => user.password = value.trim(),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    RaisedButton(
-                      onPressed: () {
-                        handleSignInUser();
-                      },
-                      child: Text("Login user"),
-                    ),
-                    RaisedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Register()),
-                        );
-                      },
-                      child: Text("Register"),
-                    ),
-                    RaisedButton(
-                      child: Text("Google Sign-in"),
-                      onPressed: () => signInWithGoogle(),
-                      color: Colors.blue,
-                    ),
+                      Padding(
+                        padding: EdgeInsets.all(20),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          RaisedButton(
+                            onPressed: () {
+                              handleSignInUser();
+                            },
+                            child: Text("Login user"),
+                            color: Styles.primaryYellow,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                          ),
+                          RaisedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => Register()),
+                              );
+                            },
+                            child: Text("Register"),
+                            color: Styles.primaryYellow,
+                          ),
+                        ],
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        child: Text("or"),
+                      ),
+                      RaisedButton(
+                        child: Text("Google Sign-in"),
+                        onPressed: () => signInWithGoogle(),
+                        color: Colors.white,
+
+                      ),
 //                Row(
 //                  mainAxisAlignment: MainAxisAlignment.center,
 //                  children: <Widget>[
@@ -133,14 +154,15 @@ class _LoginState extends State<Login> {
 //                    ),
 //                  ],
 //                ),
-                    Text("User is ${user.userId}"),
-                    Text(
-                      _loginAlert,
-                      style: TextStyle(
-                        color: Colors.red,
+//                      Text("User is ${user.userId}"),
+                      Text(
+                        _loginAlert,
+                        style: TextStyle(
+                          color: Colors.red,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               )
             ],
