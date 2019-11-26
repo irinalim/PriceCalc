@@ -95,11 +95,11 @@ class _HomeState extends State<Home> {
                   padding: EdgeInsets.only(top: 20, bottom: 30),
                 ),
                 Text(
-                  user.userEmail,
+                  user.userEmail != null ? user.userEmail : '',
                   style: TextStyle(color: Colors.red),
                 ),
                 Text(
-                  user.userId,
+                  user.userId != null ? user.userId : '',
                   style: TextStyle(color: Colors.red),
                 ),
                 Image.asset(

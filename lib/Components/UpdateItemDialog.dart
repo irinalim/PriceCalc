@@ -3,29 +3,27 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:PriceCalc/utils/date_formatter.dart';
 import 'package:PriceCalc/Models/item.dart';
 
-class SaveItemDialog extends StatefulWidget {
+class UpdateItemDialog extends StatefulWidget {
   final String userId;
-  final String price;
-  final String weight;
-  final String pricePerKilo;
+  final String itemKey;
+   Item item;
 
-  SaveItemDialog(
+  UpdateItemDialog(
       {Key key,
-      this.userId,
-      this.price,
-      this.weight,
-      this.pricePerKilo})
+        this.userId,
+        this.itemKey,
+        this.item,
+      })
       : super(key: key);
 
   @override
-  _SaveItemDialogState createState() => _SaveItemDialogState();
+  _UpdateItemDialogState createState() => _UpdateItemDialogState();
 }
 
-class _SaveItemDialogState extends State<SaveItemDialog> {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+class _UpdateItemDialogState extends State<UpdateItemDialog> {
+  final GlobalKey<FormState> formKey2 = GlobalKey<FormState>();
   final FirebaseDatabase database = FirebaseDatabase.instance;
   DatabaseReference databaseReference;
-  Item item = Item("", 0, 0, 0, "", "", "");
   int radioValue;
   String currency;
 
@@ -35,13 +33,15 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
     });
   }
 
-  void handleSubmit() {
-    final FormState form = formKey.currentState;
+  void handleUpdate(item, key) {
+    final FormState form = formKey2.currentState;
     if (form.validate()) {
       form.save();
       form.reset();
-      databaseReference.push().set(item.toJson());
+      databaseReference.child(key).set(item.toJson());
     }
+    debugPrint(key);
+    debugPrint("$item");
   }
 
   @override
@@ -61,7 +61,7 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
           child: ListView(
             children: <Widget>[
               Form(
-                key: formKey,
+                key: formKey2,
                 child: Container(
                   child: Column(
                     children: <Widget>[
@@ -70,24 +70,22 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
                           hintText: 'Bread',
                           labelText: 'Name',
                         ),
-                        initialValue: '',
+                        initialValue: widget.item.name,
                         onSaved: (val) {
-                          print(item);
-                          item.dateAdded = dateFormatted();
-                          item.name = val;
-                          item.currency = currency;
+                          widget.item.name = val;
+                          widget.item.currency = currency;
                         },
                         validator: (val) => val == "" ? val : null,
                       ),
                       TextFormField(
                         keyboardType: TextInputType.number,
-                        initialValue: widget.price,
+                        initialValue: widget.item.price.toString(),
                         decoration: const InputDecoration(
                           hintText: 'Enter price',
                           labelText: 'Price',
                         ),
                         onSaved: (val) {
-                          item.price = double.parse(val);
+                          widget.item.price = double.parse(val);
                         },
                         validator: (val) => val == "" ? val : null,
                       ),
@@ -116,9 +114,9 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
                           labelText: 'Weight',
                           suffixText: "g",
                         ),
-                        initialValue: widget.weight,
+                        initialValue: widget.item.weight.toString(),
                         onSaved: (val) {
-                          item.weight = double.parse(val);
+                          widget.item.weight = double.parse(val);
                         },
                         validator: (val) => val == "" ? val : null,
                       ),
@@ -128,9 +126,9 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
                           hintText: 'Price per kilo',
                           labelText: 'Price per kilo',
                         ),
-                        initialValue: widget.pricePerKilo,
+                        initialValue: widget.item.pricePerKilo.toString(),
                         onSaved: (val) {
-                          item.pricePerKilo = double.parse(val);
+                          widget.item.pricePerKilo = double.parse(val);
                         },
                         validator: (val) => val == "" ? val : null,
                       ),
@@ -139,9 +137,20 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
                           hintText: 'Lidl',
                           labelText: 'Seller',
                         ),
-                        initialValue: '',
+                        initialValue: widget.item.seller,
                         onSaved: (val) {
-                          item.seller = val;
+                          widget.item.seller = val;
+                        },
+                        validator: (val) => val == "" ? val : null,
+                      ),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: "10:20, Nov 21, 2019",
+                          labelText: 'Date',
+                        ),
+                        initialValue: widget.item.dateAdded,
+                        onSaved: (val) {
+                          widget.item.dateAdded = val;
                         },
                         validator: (val) => val == "" ? val : null,
                       ),
@@ -156,7 +165,7 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
           FlatButton(
             color: Colors.white,
             onPressed: () {
-              handleSubmit();
+              handleUpdate(widget.item, widget.itemKey);
               Navigator.pop(context);
             },
             child: Text("Save"),
