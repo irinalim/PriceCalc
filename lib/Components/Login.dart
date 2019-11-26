@@ -138,7 +138,7 @@ class _LoginState extends State<Login> {
                       RaisedButton(
                         child: Text("Google Sign-in"),
                         onPressed: () => signInWithGoogle(),
-                        color: Colors.white,
+                        color: Styles.lightGrey,
 
                       ),
 //                Row(

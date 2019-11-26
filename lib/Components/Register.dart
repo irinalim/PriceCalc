@@ -1,4 +1,5 @@
 import 'package:PriceCalc/Components/Login.dart';
+import 'package:PriceCalc/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -22,65 +23,75 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text('Register'),
+        backgroundColor: Styles.primaryBlue,
       ),
       body: ListView(
         children: <Widget>[
           Center(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  width: 500,
-                  child: Form(
-                    key: _registerFormKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        TextFormField(
-                          decoration: const InputDecoration(
-                            icon: Icon(Icons.email),
-                            hintText: 'Введите свой email',
-                            labelText: 'Email',
+            child: Container(
+              padding: EdgeInsets.only(top: 20),
+              width: MediaQuery.of(context).size.shortestSide - 40,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    width: 500,
+                    child: Form(
+                      key: _registerFormKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              icon: Icon(Icons.email),
+                              hintText: 'Введите свой email',
+                              labelText: 'Email',
+                            ),
+                            onSaved: (value) => user.userEmail = value.trim(),
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Введите email';
+                              }
+                              return null;
+                            },
                           ),
-                          onSaved: (value) => user.userEmail = value.trim(),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Введите email';
-                            }
-                            return null;
-                          },
-                        ),
-                        TextFormField(
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            icon: Icon(Icons.lock),
-                            hintText: 'Введите свой пароль',
-                            labelText: 'Пароль',
+                          TextFormField(
+                            obscureText: true,
+                            decoration: const InputDecoration(
+                              icon: Icon(Icons.lock),
+                              hintText: 'Введите свой пароль',
+                              labelText: 'Пароль',
+                            ),
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Введите пароль';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) => user.password = value.trim(),
                           ),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Введите пароль';
-                            }
-                            return null;
-                          },
-                          onSaved: (value) => user.password = value.trim(),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                RaisedButton(
-                  onPressed: () => handleCreateUser(),
-                  child: Text("Create user"),
-                ),
-                Text("User is ${user.userId}"),
-                Text(
-                  _loginAlert,
-                  style: TextStyle(
-                    color: Colors.red,
+                  Container(
+                    padding: EdgeInsets.only(top: 20),
+                    child: RaisedButton(
+                      onPressed: () => handleCreateUser(),
+                      child: Text("Sign up"),
+                      color: Styles.primaryYellow,
+                    ),
                   ),
-                ),
-              ],
+//                  Text("User is ${user.userId}"),
+                  Text(
+                    _loginAlert,
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                  ),
+                ],
+              ),
             ),
           )
         ],
