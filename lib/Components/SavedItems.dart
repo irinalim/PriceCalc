@@ -1,3 +1,4 @@
+import 'package:PriceCalc/Components/SaveItemDialog.dart';
 import 'package:PriceCalc/Models/item.dart';
 import 'package:PriceCalc/Models/user.dart';
 import 'package:PriceCalc/utils/styles.dart';
@@ -45,6 +46,20 @@ class _SavedItemsState extends State<SavedItems> {
             );
           },
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.add_to_photos),
+            onPressed: (){
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return SaveItemDialog(
+                      userId: widget.user.userId,
+                    );
+                  });
+            },
+          )
+        ],
       ),
       body: Column(
         children: <Widget>[

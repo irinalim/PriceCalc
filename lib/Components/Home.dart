@@ -94,14 +94,14 @@ class _HomeState extends State<Home> {
                 Padding(
                   padding: EdgeInsets.only(top: 20, bottom: 30),
                 ),
-                Text(
-                  user.userEmail != null ? user.userEmail : '',
-                  style: TextStyle(color: Colors.red),
-                ),
-                Text(
-                  user.userId != null ? user.userId : '',
-                  style: TextStyle(color: Colors.red),
-                ),
+//                Text(
+//                  user.userEmail != null ? user.userEmail : '',
+//                  style: TextStyle(color: Colors.red),
+//                ),
+//                Text(
+//                  user.userId != null ? user.userId : '',
+//                  style: TextStyle(color: Colors.red),
+//                ),
                 Image.asset(
                   'assets/images/pricecalc.png',
                   height: 130,

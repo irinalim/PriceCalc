@@ -36,11 +36,19 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
     });
   }
 
+  void calcPrice(price, weight) {
+    if (widget.pricePerKilo == null || widget.pricePerKilo == '') {
+      item.pricePerKilo = (1000 * price / weight);
+    }
+  }
+
   void handleSubmit() {
     final FormState form = formKey.currentState;
     if (form.validate()) {
       form.save();
       form.reset();
+      calcPrice(item.price, item.weight);
+      debugPrint("PPK is ${(item.pricePerKilo).toString()}");
       databaseReference.push().set(item.toJson());
     }
   }
@@ -124,18 +132,21 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
                         },
                         validator: (val) => val == "" ? val : null,
                       ),
-                      TextFormField(
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          hintText: 'Price per kilo',
-                          labelText: 'Price per kilo',
-                        ),
-                        initialValue: widget.pricePerKilo,
-                        onSaved: (val) {
-                          item.pricePerKilo = double.parse(val);
-                        },
-                        validator: (val) => val == "" ? val : null,
-                      ),
+//                      TextFormField(
+//                        enabled: false,
+//                        enableInteractiveSelection: false,
+//                        focusNode: FocusNode(),
+//                        keyboardType: TextInputType.number,
+//                        decoration: const InputDecoration(
+//                          hintText: 'Price per kilo',
+//                          labelText: 'Price per kilo',
+//                        ),
+//                        initialValue: widget.pricePerKilo,
+//                        onSaved: (val) {
+//                          item.pricePerKilo = double.parse(val);
+//                        },
+//                        validator: (val) => val == "" ? val : null,
+//                      ),
                       TextFormField(
                         decoration: const InputDecoration(
                           hintText: 'Lidl',
