@@ -47,7 +47,7 @@ class _RegisterState extends State<Register> {
                             decoration: InputDecoration(
                               icon: Icon(Icons.email),
                               hintText: AppLocalizations.of(context).translate('enter_email'),
-                              labelText: 'Email',
+                              labelText: AppLocalizations.of(context).translate('enter_email'),
                             ),
                             onSaved: (value) => user.userEmail = value.trim(),
                             validator: (value) {
@@ -61,12 +61,12 @@ class _RegisterState extends State<Register> {
                             obscureText: true,
                             decoration: InputDecoration(
                               icon: Icon(Icons.lock),
-                              hintText: AppLocalizations.of(context).translate('enter_password'),
-                              labelText: AppLocalizations.of(context).translate('password'),
+                              hintText: AppLocalizations.of(context).translate('create_password'),
+                              labelText: AppLocalizations.of(context).translate('create_password'),
                             ),
                             validator: (value) {
                               if (value.isEmpty) {
-                                return AppLocalizations.of(context).translate('enter_password');
+                                return AppLocalizations.of(context).translate('create_password');
                               }
                               return null;
                             },

@@ -5,6 +5,7 @@
   "save_item": "Сохранить",
   "saved_item": "Сохранённый товар",
   "choose_currency": "Выберите валюту",
+  "currency": "Валюта",
   "loading": "Загружается...",
 
   "login": "Войти",
@@ -13,7 +14,7 @@
   "google_sign_in": "Войти с Google",
   "enter_email": "Введите email",
   "enter_password": "Введите пароль",
-  "currency": "Валюта",
+  "create_password": "Создайте пароль",
 
   "name": "Название",
   "price": "Цена",

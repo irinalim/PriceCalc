@@ -75,7 +75,7 @@ class _LoginState extends State<Login> {
                                 decoration: InputDecoration(
                                   icon: Icon(Icons.email),
                                   hintText: AppLocalizations.of(context).translate('enter_email'),
-                                  labelText: 'Email',
+                                  labelText: AppLocalizations.of(context).translate('enter_email'),
                                 ),
                                 onSaved: (value) => user.userEmail = value.trim(),
                                 validator: (value) {
