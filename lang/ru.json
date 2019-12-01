@@ -1,9 +1,9 @@
 {
-  "calculate": "Пересчитать",
+  "calculate": "Посчитать",
   "clear": "Очистить",
   "enter_price": "Введите цену и вес",
   "save_item": "Сохранить",
-  "choose_curency": "Выберите валюту",
+  "choose_currency": "Выберите валюту",
   "login": "Войти",
   "logout": "Выйти",
   "register": "Зарегистрироваться",
@@ -19,5 +19,7 @@
   "delete": "Удалить",
   "update": "Изменить",
   "close": "Закрыть",
-  "price_per_kilo": "Цена за кило"
+  "price_per_kilo": "Цена за кило",
+  "gram": "г",
+  "kilo": "кг"
 }

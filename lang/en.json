@@ -3,7 +3,7 @@
   "clear": "Clear",
   "enter_price": "Please enter price and weight",
   "save_item": "Save item",
-  "choose_curency": "Choose your currency",
+  "choose_currency": "Choose your currency",
   "login": "Login",
   "logout": "Logout",
   "register": "Register",
@@ -19,5 +19,7 @@
   "delete": "Delete",
   "update": "Update",
   "close": "Close",
-  "price_per_kilo": "Price per kilo"
+  "price_per_kilo": "Price per kilo",
+  "gram": "g",
+  "kilo": "kg"
 }

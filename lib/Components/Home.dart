@@ -19,10 +19,11 @@ class _HomeState extends State<Home> {
   String pricePerKilo = '';
   int radioValue = 0;
   String currency = 'EUR';
+
 //  User user = User("", "", "");
   User user;
-//  FirebaseUser currentUser;
 
+//  FirebaseUser currentUser;
 
   void _clearTextFields() {
     FocusScope.of(context).unfocus();
@@ -35,15 +36,14 @@ class _HomeState extends State<Home> {
 
   void calcPrice() {
     FocusScope.of(context).unfocus();
-    setState(() {
-      double price = double.parse(_priceController.text);
-      double weight = double.parse(_weightController.text);
-      if (_priceController.text.isNotEmpty &&
-          _priceController.text.isNotEmpty) {
+    if (_priceController.text.isNotEmpty && _priceController.text.isNotEmpty) {
+      setState(() {
+        double price = double.parse(_priceController.text);
+        double weight = double.parse(_weightController.text);
         double priceDouble = 1000 * price / weight;
         pricePerKilo = priceDouble.toStringAsFixed(2);
-      }
-    });
+      });
+    }
   }
 
   void handleRadioValueChanged(int value) {
@@ -118,7 +118,8 @@ class _HomeState extends State<Home> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text("Choose your currency"),
+                      Text(AppLocalizations.of(context)
+                          .translate('choose_currency')),
                       Radio<int>(
                         value: 0,
                         groupValue: radioValue,
@@ -147,7 +148,8 @@ class _HomeState extends State<Home> {
                           decoration: InputDecoration(
                             suffixText: currency,
 //                          suffixIcon: Icon(Icons.euro_symbol),
-                            hintText: "Price",
+                            hintText:
+                                AppLocalizations.of(context).translate('price'),
                             icon: Icon(Icons.monetization_on),
                           ),
                         ),
@@ -160,8 +162,10 @@ class _HomeState extends State<Home> {
                           controller: _weightController,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                            hintText: "Weight",
-                            suffixText: "g",
+                            hintText: AppLocalizations.of(context)
+                                .translate('weight'),
+                            suffixText:
+                                AppLocalizations.of(context).translate('gram'),
                             icon: Icon(Icons.local_grocery_store),
                           ),
                         ),
@@ -185,18 +189,20 @@ class _HomeState extends State<Home> {
                     minWidth: 130,
                     onPressed: _clearTextFields,
                     color: Styles.lightGrey,
-                    child: new Text("Clear",
+                    child: new Text(
+                        AppLocalizations.of(context).translate('clear'),
                         style: TextStyle(color: Colors.black, fontSize: 16.9)),
                   ),
                 ),
                 Padding(padding: EdgeInsets.all(20)),
                 _weightController.text.isEmpty && _priceController.text.isEmpty
                     ? Text(
-                        "Please enter price and weight",
+                        AppLocalizations.of(context).translate('enter_price'),
                         textAlign: TextAlign.center,
                       )
                     : Text(
-                        "$pricePerKilo $currency/kg",
+                        "$pricePerKilo $currency" +
+                            AppLocalizations.of(context).translate('kilo'),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 30,
@@ -224,8 +230,10 @@ class _HomeState extends State<Home> {
                         Navigator.pushNamed(context, '/login');
                       }
                     },
-                    color: user == null ? Styles.lightGrey : Styles.primaryYellow,
-                    child: new Text("Save item",
+                    color:
+                        user == null ? Styles.lightGrey : Styles.primaryYellow,
+                    child: new Text(
+                        AppLocalizations.of(context).translate('save_item'),
                         style: TextStyle(color: Colors.black, fontSize: 16.9)),
                   ),
                 ),
