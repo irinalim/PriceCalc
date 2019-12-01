@@ -17,7 +17,10 @@ class _HomeState extends State<Home> {
   String pricePerKilo = '';
   int radioValue = 0;
   String currency = 'EUR';
-  User user = User("", "", "");
+//  User user = User("", "", "");
+  User user;
+//  FirebaseUser currentUser;
+
 
   void _clearTextFields() {
     FocusScope.of(context).unfocus();
@@ -197,22 +200,27 @@ class _HomeState extends State<Home> {
                             color: Styles.primaryBlue),
                       ),
                 Container(
+                  padding: EdgeInsets.only(top: 25),
                   child: MaterialButton(
                     minWidth: 130,
                     onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return SaveItemDialog(
-                              userId: user.userId,
-                              price: _priceController.text,
-                              weight: _weightController.text,
-                              pricePerKilo: pricePerKilo,
-                              currency: currency,
-                            );
-                          });
+                      if (user != null) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return SaveItemDialog(
+                                userId: user.userId,
+                                price: _priceController.text,
+                                weight: _weightController.text,
+                                pricePerKilo: pricePerKilo,
+                                currency: currency,
+                              );
+                            });
+                      } else {
+                        Navigator.pushNamed(context, '/login');
+                      }
                     },
-                    color: Styles.lightGrey,
+                    color: user == null ? Styles.lightGrey : Styles.primaryYellow,
                     child: new Text("Save item",
                         style: TextStyle(color: Colors.black, fontSize: 16.9)),
                   ),

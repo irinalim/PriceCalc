@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'Components/SavedItems.dart';
 
 void main () async {
-  Widget _defaultScreen = Login();
+  Widget _defaultScreen = Home();
 
   runApp(MaterialApp(
     title: 'PriceApp',
