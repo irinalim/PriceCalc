@@ -1,0 +1,23 @@
+{
+  "calculate": "Пересчитать",
+  "clear": "Очистить",
+  "enter_price": "Введите цену и вес",
+  "save_item": "Сохранить",
+  "choose_curency": "Выберите валюту",
+  "login": "Войти",
+  "logout": "Выйти",
+  "register": "Зарегистрироваться",
+  "google_sign_in": "Войти с Google",
+  "name": "Название",
+  "price": "Цена",
+  "weight": "Вес",
+  "seller": "Продавец",
+  "date": "Дата",
+  "save": "Сохранить",
+  "cancel": "Отмена",
+  "saved_items": "Сохранённые товары",
+  "delete": "Удалить",
+  "update": "Изменить",
+  "close": "Закрыть",
+  "price_per_kilo": "Цена за кило"
+}

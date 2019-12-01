@@ -1,0 +1,23 @@
+{
+  "calculate": "Calculate",
+  "clear": "Clear",
+  "enter_price": "Please enter price and weight",
+  "save_item": "Save item",
+  "choose_curency": "Choose your currency",
+  "login": "Login",
+  "logout": "Logout",
+  "register": "Register",
+  "google_sign_in": "Google Sign-in",
+  "name": "Name",
+  "price": "Price",
+  "weight": "Weight",
+  "seller": "seller",
+  "date": "Date",
+  "save": "Save",
+  "cancel": "Cancel",
+  "saved_items": "Saved items",
+  "delete": "Delete",
+  "update": "Update",
+  "close": "Close",
+  "price_per_kilo": "Price per kilo"
+}

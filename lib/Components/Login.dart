@@ -113,7 +113,7 @@ class _LoginState extends State<Login> {
                             onPressed: () {
                               handleSignInUser();
                             },
-                            child: Text("Login user"),
+                            child: Text("Login"),
                             color: Styles.primaryYellow,
                           ),
                           Padding(

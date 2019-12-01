@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:PriceCalc/Components/Home-Drawer.dart';
 import 'package:PriceCalc/utils/styles.dart';
 
+import '../app_localizations.dart';
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -172,7 +174,9 @@ class _HomeState extends State<Home> {
                     minWidth: 130,
                     onPressed: calcPrice,
                     color: Styles.primaryYellow,
-                    child: Text("Calculate", style: TextStyle(fontSize: 16.9)),
+                    child: Text(
+                        AppLocalizations.of(context).translate('calculate'),
+                        style: TextStyle(fontSize: 16.9)),
                     splashColor: Theme.of(context).splashColor,
                   ),
                 ),
