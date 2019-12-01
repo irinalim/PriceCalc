@@ -181,7 +181,7 @@ class _LoginState extends State<Login> {
         _showProgressIndicator();
         final email = user.userEmail;
         final password = user.password;
-        debugPrint("Email and password are $email + $password");
+//        debugPrint("Email and password are $email + $password");
         FirebaseUser currentUser = await _signInUser(email, password);
         setState(() {
           user = User.fromSnapshot(currentUser);

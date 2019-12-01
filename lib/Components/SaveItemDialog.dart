@@ -38,9 +38,10 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
   }
 
   void calcPrice(price, weight) {
-    if (widget.pricePerKilo == null || widget.pricePerKilo == '') {
+//    debugPrint("Calvulated PPK" + item.pricePerKilo.toString());
+    setState(() {
       item.pricePerKilo = double.parse((1000 * price / weight).toStringAsFixed(2));
-    }
+    });
   }
 
   void handleSubmit() {
@@ -48,7 +49,12 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
     if (form.validate()) {
       form.save();
       form.reset();
-      calcPrice(item.price, item.weight);
+      if (widget.pricePerKilo == null || widget.pricePerKilo == '') {
+        calcPrice(item.price, item.weight);
+      } else {
+        item.pricePerKilo = double.parse(widget.pricePerKilo);
+      }
+
 //      debugPrint("PPK is ${(item.pricePerKilo).toString()}");
       databaseReference.push().set(item.toJson());
     }

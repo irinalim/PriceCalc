@@ -15,8 +15,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final TextEditingController _priceController = new TextEditingController();
   final TextEditingController _weightController = new TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  String pricePerKilo = '';
+  String pricePerKilo;
   int radioValue = 0;
   String currency = 'EUR';
 
@@ -218,6 +217,7 @@ class _HomeState extends State<Home> {
                         showDialog(
                             context: context,
                             builder: (context) {
+//                              debugPrint("PPK HOME "+pricePerKilo);
                               return SaveItemDialog(
                                 userId: user.userId,
                                 price: _priceController.text,

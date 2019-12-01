@@ -16,13 +16,16 @@ void main() async {
     theme: ThemeData(
       primarySwatch: Colors.blue,
     ),
-    supportedLocales: [Locale('en', 'US'), Locale('ru', 'RU')],
+    supportedLocales: [Locale('ru', 'RU'), Locale('en', 'US')],
     localizationsDelegates: [
       AppLocalizations.delegate,
       GlobalMaterialLocalizations.delegate,
       GlobalWidgetsLocalizations.delegate,
     ],
     localeResolutionCallback: (locale, supportedLocales) {
+      if (locale == null) {
+        return supportedLocales.first;
+      }
       // Check if the current device locale is supported
       for (var supportedLocale in supportedLocales) {
         if (supportedLocale.languageCode == locale.languageCode &&

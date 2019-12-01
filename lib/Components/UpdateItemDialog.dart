@@ -40,8 +40,8 @@ class _UpdateItemDialogState extends State<UpdateItemDialog> {
       form.reset();
       databaseReference.child(key).set(item.toJson());
     }
-    debugPrint(key);
-    debugPrint("$item");
+//    debugPrint(key);
+//    debugPrint("$item");
   }
 
   @override

@@ -107,7 +107,7 @@ class _RegisterState extends State<Register> {
       try {
         final email = user.userEmail;
         final password = user.password;
-        debugPrint("Email and password are $email + $password");
+//        debugPrint("Email and password are $email + $password");
         FirebaseUser currentUser = await _createUser(email, password);
         setState(() {
           user.userEmail = currentUser.email;
