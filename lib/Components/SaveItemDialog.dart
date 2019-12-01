@@ -1,3 +1,4 @@
+import 'package:PriceCalc/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:PriceCalc/utils/date_formatter.dart';
@@ -38,7 +39,7 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
 
   void calcPrice(price, weight) {
     if (widget.pricePerKilo == null || widget.pricePerKilo == '') {
-      item.pricePerKilo = (1000 * price / weight);
+      item.pricePerKilo = double.parse((1000 * price / weight).toStringAsFixed(2));
     }
   }
 
@@ -48,7 +49,7 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
       form.save();
       form.reset();
       calcPrice(item.price, item.weight);
-      debugPrint("PPK is ${(item.pricePerKilo).toString()}");
+//      debugPrint("PPK is ${(item.pricePerKilo).toString()}");
       databaseReference.push().set(item.toJson());
     }
   }
@@ -76,9 +77,9 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
                   child: Column(
                     children: <Widget>[
                       TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: 'Bread',
-                          labelText: 'Name',
+                        decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context).translate('hint_item'),
+                          labelText: AppLocalizations.of(context).translate('name'),
                         ),
                         initialValue: '',
                         onSaved: (val) {
@@ -86,15 +87,16 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
                           item.dateAdded = dateFormatted();
                           item.name = val;
                           item.currency = currency;
+//                          item.pricePerKilo = ;
                         },
                         validator: (val) => val == "" ? val : null,
                       ),
                       TextFormField(
                         keyboardType: TextInputType.number,
                         initialValue: widget.price,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter price',
-                          labelText: 'Price',
+                        decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context).translate('enter_price'),
+                          labelText: AppLocalizations.of(context).translate('price'),
                         ),
                         onSaved: (val) {
                           item.price = double.parse(val);
@@ -104,7 +106,7 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text("Currency"),
+                          Text(AppLocalizations.of(context).translate('currency')),
                           Radio<int>(
                             value: 0,
                             groupValue: radioValue,
@@ -121,10 +123,10 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
                       ),
                       TextFormField(
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter weight',
-                          labelText: 'Weight',
-                          suffixText: "g",
+                        decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context).translate('enter_weight'),
+                          labelText: AppLocalizations.of(context).translate('weight'),
+                          suffixText: AppLocalizations.of(context).translate('gram'),
                         ),
                         initialValue: widget.weight,
                         onSaved: (val) {
@@ -148,9 +150,9 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
 //                        validator: (val) => val == "" ? val : null,
 //                      ),
                       TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: 'Lidl',
-                          labelText: 'Seller',
+                        decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context).translate('hint_seller'),
+                          labelText: AppLocalizations.of(context).translate('seller'),
                         ),
                         initialValue: '',
                         onSaved: (val) {
@@ -172,11 +174,11 @@ class _SaveItemDialogState extends State<SaveItemDialog> {
               handleSubmit();
               Navigator.pop(context);
             },
-            child: Text("Save"),
+            child: Text(AppLocalizations.of(context).translate('save')),
           ),
           FlatButton(
             onPressed: () => Navigator.pop(context),
-            child: Text("Cancel"),
+            child: Text(AppLocalizations.of(context).translate('cancel')),
           )
         ],
       ),

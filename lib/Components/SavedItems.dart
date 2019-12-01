@@ -1,6 +1,7 @@
 import 'package:PriceCalc/Components/SaveItemDialog.dart';
 import 'package:PriceCalc/Models/item.dart';
 import 'package:PriceCalc/Models/user.dart';
+import 'package:PriceCalc/app_localizations.dart';
 import 'package:PriceCalc/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
@@ -35,7 +36,7 @@ class _SavedItemsState extends State<SavedItems> {
       appBar: AppBar(
         backgroundColor: Styles.primaryYellow,
         title: Text(
-          "Saved Items",
+          AppLocalizations.of(context).translate('saved_items'),
           style: TextStyle(color: Styles.blueGrey),
         ),
         centerTitle: true,
@@ -82,7 +83,7 @@ class _SavedItemsState extends State<SavedItems> {
                         inAsyncCall: true,
                         child: Center(
                           child: Text(
-                            "Загружается...",
+                            AppLocalizations.of(context).translate('loading'),
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -113,7 +114,7 @@ class _SavedItemsState extends State<SavedItems> {
 
   void showItem(item, key) {
     Widget ItemCard = AlertDialog(
-      title: Text("Saved Item"),
+      title: Text(AppLocalizations.of(context).translate('saved_item')),
       content: Container(
         height: 180,
         child: Center(
@@ -121,32 +122,32 @@ class _SavedItemsState extends State<SavedItems> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Text(
-                "Name: ${item.name}",
+                AppLocalizations.of(context).translate('name')+": ${item.name}",
                 style: Styles.header5TextStyle,
                 textAlign: TextAlign.left,
               ),
               Text(
-                "Seller: ${item.seller}",
+                AppLocalizations.of(context).translate('seller')+": ${item.seller}",
                 style: Styles.header5TextStyle,
                 textAlign: TextAlign.left,
               ),
               Text(
-                "Price: ${item.price} ${item.currency}",
+                AppLocalizations.of(context).translate('price')+": ${item.price} ${item.currency}",
                 style: Styles.header5TextStyle,
                 textAlign: TextAlign.left,
               ),
               Text(
-                "Weight: ${item.weight} g",
+                AppLocalizations.of(context).translate('weight')+": ${item.weight} g",
                 style: Styles.header5TextStyle,
                 textAlign: TextAlign.left,
               ),
               Text(
-                "Price per kilo: ${item.pricePerKilo} ${item.currency}",
+                AppLocalizations.of(context).translate('price_per_kilo')+": ${item.pricePerKilo} ${item.currency}",
                 style: Styles.header5TextStyle,
                 textAlign: TextAlign.left,
               ),
               Text(
-                "Added: ${item.dateAdded}",
+                AppLocalizations.of(context).translate('added')+": ${item.dateAdded}",
                 style: Styles.header5TextStyle,
                 textAlign: TextAlign.left,
               ),
@@ -161,7 +162,7 @@ class _SavedItemsState extends State<SavedItems> {
             Navigator.of(context).pop();
           },
           child: Text(
-            "Delete",
+          AppLocalizations.of(context).translate('delete'),
             style: TextStyle(color: Colors.red),
           ),
         ),
@@ -182,7 +183,7 @@ class _SavedItemsState extends State<SavedItems> {
             }
           },
           child: Text(
-            "Update",
+            AppLocalizations.of(context).translate('update'),
             style: TextStyle(color: Colors.green),
           ),
         ),
@@ -190,7 +191,7 @@ class _SavedItemsState extends State<SavedItems> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text("Close"),
+          child: Text(AppLocalizations.of(context).translate('close')),
         ),
       ],
     );

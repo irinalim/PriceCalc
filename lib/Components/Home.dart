@@ -197,11 +197,11 @@ class _HomeState extends State<Home> {
                 Padding(padding: EdgeInsets.all(20)),
                 _weightController.text.isEmpty && _priceController.text.isEmpty
                     ? Text(
-                        AppLocalizations.of(context).translate('enter_price'),
+                        AppLocalizations.of(context).translate('note'),
                         textAlign: TextAlign.center,
                       )
                     : Text(
-                        "$pricePerKilo $currency" +
+                        "$pricePerKilo $currency/" +
                             AppLocalizations.of(context).translate('kilo'),
                         textAlign: TextAlign.center,
                         style: TextStyle(

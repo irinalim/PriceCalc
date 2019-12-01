@@ -1,18 +1,31 @@
 {
   "calculate": "Посчитать",
   "clear": "Очистить",
-  "enter_price": "Введите цену и вес",
+  "note": "Введите цену и вес",
   "save_item": "Сохранить",
+  "saved_item": "Сохранённый товар",
   "choose_currency": "Выберите валюту",
+  "loading": "Загружается...",
+
   "login": "Войти",
   "logout": "Выйти",
   "register": "Зарегистрироваться",
   "google_sign_in": "Войти с Google",
+  "enter_email": "Введите email",
+  "enter_password": "Введите пароль",
+  "currency": "Валюта",
+
   "name": "Название",
   "price": "Цена",
   "weight": "Вес",
   "seller": "Продавец",
   "date": "Дата",
+  "added": "Добавлен",
+  "hint_item": "Молоко",
+  "hint_seller": "Ашан",
+  "enter_price": "Введите цену",
+  "enter_weight": "Введите вес",
+
   "save": "Сохранить",
   "cancel": "Отмена",
   "saved_items": "Сохранённые товары",
@@ -20,6 +33,8 @@
   "update": "Изменить",
   "close": "Закрыть",
   "price_per_kilo": "Цена за кило",
+
   "gram": "г",
-  "kilo": "кг"
+  "kilo": "кг",
+  "or": "или"
 }

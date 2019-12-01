@@ -1,4 +1,5 @@
 import 'package:PriceCalc/Components/Home.dart';
+import 'package:PriceCalc/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -71,29 +72,29 @@ class _LoginState extends State<Login> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               TextFormField(
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                   icon: Icon(Icons.email),
-                                  hintText: 'Введите свой email',
+                                  hintText: AppLocalizations.of(context).translate('enter_email'),
                                   labelText: 'Email',
                                 ),
                                 onSaved: (value) => user.userEmail = value.trim(),
                                 validator: (value) {
                                   if (value.isEmpty) {
-                                    return 'Введите email';
+                                    return AppLocalizations.of(context).translate('enter_email');
                                   }
                                   return null;
                                 },
                               ),
                               TextFormField(
                                 obscureText: true,
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                   icon: Icon(Icons.lock),
-                                  hintText: 'Введите свой пароль',
-                                  labelText: 'Пароль',
+                                  hintText: AppLocalizations.of(context).translate('enter_password'),
+                                  labelText: AppLocalizations.of(context).translate('password'),
                                 ),
                                 validator: (value) {
                                   if (value.isEmpty) {
-                                    return 'Введите пароль';
+                                    return AppLocalizations.of(context).translate('enter_password');
                                   }
                                   return null;
                                 },
@@ -113,7 +114,7 @@ class _LoginState extends State<Login> {
                             onPressed: () {
                               handleSignInUser();
                             },
-                            child: Text("Login"),
+                            child: Text(AppLocalizations.of(context).translate('login')),
                             color: Styles.primaryYellow,
                           ),
                           Padding(
@@ -126,17 +127,17 @@ class _LoginState extends State<Login> {
                                 MaterialPageRoute(builder: (context) => Register()),
                               );
                             },
-                            child: Text("Register"),
+                            child: Text(AppLocalizations.of(context).translate('register')),
                             color: Styles.primaryYellow,
                           ),
                         ],
                       ),
                       Container(
                         padding: EdgeInsets.all(10),
-                        child: Text("or"),
+                        child: Text(AppLocalizations.of(context).translate('or')),
                       ),
                       RaisedButton(
-                        child: Text("Google Sign-in"),
+                        child: Text(AppLocalizations.of(context).translate('google_sign_in')),
                         onPressed: () => signInWithGoogle(),
                         color: Styles.lightGrey,
 

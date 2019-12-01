@@ -1,5 +1,6 @@
 import 'package:PriceCalc/Components/SavedItems.dart';
 import 'package:PriceCalc/Models/user.dart';
+import 'package:PriceCalc/app_localizations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:PriceCalc/utils/styles.dart';
@@ -16,7 +17,7 @@ Widget homeDrawer(User user, context) {
             ? Center(
                 child: RaisedButton(
                   color: Styles.primaryYellow,
-                  child: Text("Login"),
+                  child: Text(AppLocalizations.of(context).translate('login')),
                   onPressed: () {
                     Navigator.pushNamed(context, '/login');
                   },
@@ -58,7 +59,7 @@ Widget homeDrawer(User user, context) {
                                 color: Styles.blueGrey,
                               ),
                               Text(
-                                "  Saved items",
+                                " " + AppLocalizations.of(context).translate('saved_items'),
                                 style: Styles.header2TextStyle,
                               ),
                             ],
@@ -80,7 +81,7 @@ Widget homeDrawer(User user, context) {
                         },
                         color: Styles.lightGrey,
                         child: new Text(
-                          "Выйти",
+                            AppLocalizations.of(context).translate('logout')
                         ),
                       ),
                     ),

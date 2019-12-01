@@ -1,18 +1,31 @@
 {
   "calculate": "Calculate",
   "clear": "Clear",
-  "enter_price": "Please enter price and weight",
+  "note": "Please enter price and weight",
   "save_item": "Save item",
+  "saved_item": "Saved item",
   "choose_currency": "Choose your currency",
+  "currency": "Currency",
+  "loading": "Loading...",
+
   "login": "Login",
   "logout": "Logout",
   "register": "Register",
   "google_sign_in": "Google Sign-in",
+  "enter_email": "Enter your email",
+  "enter_password": "Enter your password",
+
   "name": "Name",
   "price": "Price",
   "weight": "Weight",
   "seller": "seller",
   "date": "Date",
+  "added": "Added",
+  "hint_item": "Milk",
+  "hint_seller": "Lidl",
+  "enter_price": "Enter price",
+  "enter_weight": "Enter weight",
+
   "save": "Save",
   "cancel": "Cancel",
   "saved_items": "Saved items",
@@ -20,6 +33,8 @@
   "update": "Update",
   "close": "Close",
   "price_per_kilo": "Price per kilo",
+
   "gram": "g",
-  "kilo": "kg"
+  "kilo": "kg",
+  "or": "or"
 }

@@ -1,3 +1,4 @@
+import 'package:PriceCalc/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:PriceCalc/Models/item.dart';
@@ -66,9 +67,9 @@ class _UpdateItemDialogState extends State<UpdateItemDialog> {
                   child: Column(
                     children: <Widget>[
                       TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: 'Bread',
-                          labelText: 'Name',
+                        decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context).translate('hint_item'),
+                          labelText: AppLocalizations.of(context).translate('name'),
                         ),
                         initialValue: widget.item.name,
                         onSaved: (val) {
@@ -80,9 +81,9 @@ class _UpdateItemDialogState extends State<UpdateItemDialog> {
                       TextFormField(
                         keyboardType: TextInputType.number,
                         initialValue: widget.item.price.toString(),
-                        decoration: const InputDecoration(
-                          hintText: 'Enter price',
-                          labelText: 'Price',
+                        decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context).translate('enter_price'),
+                          labelText: AppLocalizations.of(context).translate('price'),
                         ),
                         onSaved: (val) {
                           widget.item.price = double.parse(val);
@@ -92,7 +93,7 @@ class _UpdateItemDialogState extends State<UpdateItemDialog> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text("Currency"),
+                          Text(AppLocalizations.of(context).translate('currency')),
                           Radio<int>(
                             value: 0,
                             groupValue: radioValue,
@@ -109,10 +110,10 @@ class _UpdateItemDialogState extends State<UpdateItemDialog> {
                       ),
                       TextFormField(
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter weight',
-                          labelText: 'Weight',
-                          suffixText: "g",
+                        decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context).translate('enter_weight'),
+                          labelText: AppLocalizations.of(context).translate('weight'),
+                          suffixText: AppLocalizations.of(context).translate('gram'),
                         ),
                         initialValue: widget.item.weight.toString(),
                         onSaved: (val) {
@@ -122,9 +123,9 @@ class _UpdateItemDialogState extends State<UpdateItemDialog> {
                       ),
                       TextFormField(
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          hintText: 'Price per kilo',
-                          labelText: 'Price per kilo',
+                        decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context).translate('price_per_kilo'),
+                          labelText: AppLocalizations.of(context).translate('price_per_kilo'),
                         ),
                         initialValue: widget.item.pricePerKilo.toString(),
                         onSaved: (val) {
@@ -133,9 +134,9 @@ class _UpdateItemDialogState extends State<UpdateItemDialog> {
                         validator: (val) => val == "" ? val : null,
                       ),
                       TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: 'Lidl',
-                          labelText: 'Seller',
+                        decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context).translate('hint_seller'),
+                          labelText: AppLocalizations.of(context).translate('seller'),
                         ),
                         initialValue: widget.item.seller,
                         onSaved: (val) {
@@ -144,9 +145,9 @@ class _UpdateItemDialogState extends State<UpdateItemDialog> {
                         validator: (val) => val == "" ? val : null,
                       ),
                       TextFormField(
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           hintText: "10:20, Nov 21, 2019",
-                          labelText: 'Date',
+                          labelText: AppLocalizations.of(context).translate('date'),
                         ),
                         initialValue: widget.item.dateAdded,
                         onSaved: (val) {
@@ -168,11 +169,11 @@ class _UpdateItemDialogState extends State<UpdateItemDialog> {
               handleUpdate(widget.item, widget.itemKey);
               Navigator.pop(context);
             },
-            child: Text("Save"),
+            child: Text(AppLocalizations.of(context).translate('save')),
           ),
           FlatButton(
             onPressed: () => Navigator.pop(context),
-            child: Text("Cancel"),
+            child: Text(AppLocalizations.of(context).translate('cancel')),
           )
         ],
       ),

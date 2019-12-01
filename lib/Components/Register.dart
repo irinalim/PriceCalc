@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/services.dart' show PlatformException;
 import 'package:PriceCalc/Models/user.dart';
+import '../app_localizations.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -24,7 +25,7 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Register'),
+        title: Text(AppLocalizations.of(context).translate('register')),
         backgroundColor: Styles.primaryBlue,
       ),
       body: ListView(
@@ -43,29 +44,29 @@ class _RegisterState extends State<Register> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           TextFormField(
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               icon: Icon(Icons.email),
-                              hintText: 'Введите свой email',
+                              hintText: AppLocalizations.of(context).translate('enter_email'),
                               labelText: 'Email',
                             ),
                             onSaved: (value) => user.userEmail = value.trim(),
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Введите email';
+                                return AppLocalizations.of(context).translate('enter_email');
                               }
                               return null;
                             },
                           ),
                           TextFormField(
                             obscureText: true,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               icon: Icon(Icons.lock),
-                              hintText: 'Введите свой пароль',
-                              labelText: 'Пароль',
+                              hintText: AppLocalizations.of(context).translate('enter_password'),
+                              labelText: AppLocalizations.of(context).translate('password'),
                             ),
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'Введите пароль';
+                                return AppLocalizations.of(context).translate('enter_password');
                               }
                               return null;
                             },
@@ -79,7 +80,7 @@ class _RegisterState extends State<Register> {
                     padding: EdgeInsets.only(top: 20),
                     child: RaisedButton(
                       onPressed: () => handleCreateUser(),
-                      child: Text("Sign up"),
+                      child: Text(AppLocalizations.of(context).translate('register')),
                       color: Styles.primaryYellow,
                     ),
                   ),
