@@ -4,6 +4,8 @@ class Styles {
   static final primaryBlue = const Color.fromRGBO(81, 109, 141, 1);
   static final primaryYellow = const Color.fromRGBO(255, 224, 130, 1);
   static final lightGrey = const Color.fromRGBO(238, 238, 238, 1);
+  static final lightBlue = const Color.fromRGBO(127, 155, 189, 1);
+  static final darkBlue = const Color.fromRGBO(36, 66, 96, 1);
   static final blueGrey = const Color.fromRGBO(94, 101, 111, 1);
 
   static final header5TextStyle = TextStyle(

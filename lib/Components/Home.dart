@@ -231,7 +231,7 @@ class _HomeState extends State<Home> {
                       }
                     },
                     color:
-                        user == null ? Styles.lightGrey : Styles.primaryYellow,
+                        user == null ? Styles.lightGrey : Styles.lightBlue,
                     child: new Text(
                         AppLocalizations.of(context).translate('save_item'),
                         style: TextStyle(color: Colors.black, fontSize: 16.9)),
