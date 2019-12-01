@@ -97,12 +97,12 @@ class _SavedItemsState extends State<SavedItems> {
                           Icons.shopping_cart,
                           color: Styles.primaryBlue,
                         ),
-                        title: Text(item.name),
+                        title: Text(item.name, style: Styles.header3TextStyle,),
                         subtitle: Text(item.seller),
                         onTap: () => showItem(item, snapshot.key),
                         trailing: Text(
                           item.pricePerKilo.toString()  + " " + item.currency,
-                          style: Styles.header2TextStyle,
+                          style: Styles.header3TextStyle,
                         )),
                   );
                 }),
